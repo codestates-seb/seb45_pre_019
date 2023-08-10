@@ -8,4 +8,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "Spring")
 public interface QuestionMapper {
 	Question questionPostDtoToQuestion(QuestionDto.Post postDto);
+	Question questionPatchDtoToQuestion(QuestionDto.Patch patchDto);
+
 }
