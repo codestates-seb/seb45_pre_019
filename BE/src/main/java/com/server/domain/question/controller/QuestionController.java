@@ -8,6 +8,7 @@ import com.server.global.common.dto.SingleResDto;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriBuilder;
@@ -37,7 +38,11 @@ public class QuestionController {
 	}
 
 	@PatchMapping("/{question_id}")
-	public ResponseEntity<SingleResDto<String>> patchQuestion(@Valid @RequestBody QuestionDto.Patch patchDto) {
-		return null;
+	public ResponseEntity<SingleResDto<String>> patchQuestion(@PathVariable("question_id") long questionId,
+																@Valid @RequestBody QuestionDto.Patch patchDto) {
+		Question updateQuestion = questionService.updateQuestion(mapper.questionPatchDtoToQuestion(patchDto));
+
+		return new ResponseEntity(new SingleResDto<String>("success modify question"), HttpStatus.OK);
+
 	}
 }
