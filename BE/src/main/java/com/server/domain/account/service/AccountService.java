@@ -3,6 +3,8 @@ package com.server.domain.account.service;
 import org.springframework.stereotype.Service;
 
 import com.server.domain.account.entity.Account;
+import com.server.domain.account.repository.AccountRepository;
+import com.server.global.exception.advice.BusinessLogicException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,7 +12,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AccountService {
 
-	public void signUp(Account account) {
+	private final AccountRepository accountRepository;
 
+	public void signUp(Account account) {
+		existAccount(account.getAccountId());
+		accountRepository.save(account);
+	}
+
+	private void existAccount(Long id) {
+		accountRepository.findById(id).orElseThrow(new BusinessLogicException());
 	}
 }
