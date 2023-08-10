@@ -34,8 +34,13 @@ public class AccountController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/login")
-	public String postLogin() {
-		return "";
+	@GetMapping("/login-page")
+	public String loginPage() {
+		return "login";
+	}
+
+	@PostMapping("/login")
+	public String login() {
+		return "main";
 	}
 }
