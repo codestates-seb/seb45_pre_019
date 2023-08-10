@@ -24,7 +24,7 @@ public class AccountService {
 	}
 
 	// 회원조회
-	public Account findMember(Long accountId) {
+	public Account findAccount(Long accountId) {
 		return accountRepository.findById(accountId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND));
 	}
 

@@ -1,5 +1,6 @@
 package com.server.domain.question.entity;
 
+import com.server.domain.account.entity.Account;
 import com.server.global.auditing.TimeStamp;
 
 import lombok.AllArgsConstructor;
@@ -20,16 +21,16 @@ public class Question extends TimeStamp {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long questionId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "question_title")
 	private String questionTitle;
 
-	@Column(columnDefinition = "TEXT", nullable = false)
+	@Column(columnDefinition = "TEXT", nullable = false, name = "question_content")
 	private String questionContent;
 
-	//    @ManyToOne
-	//    @JoinColumn(name = "ACCOUNT_ID")
-	//    private Account account;
-	//
+	   @ManyToOne
+	   @JoinColumn(name = "account_id")
+	   private Account account;
+
 	//    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
 	//    private List<Answer> answers;
 

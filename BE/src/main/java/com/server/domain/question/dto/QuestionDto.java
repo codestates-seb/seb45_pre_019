@@ -1,5 +1,6 @@
 package com.server.domain.question.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -16,9 +17,9 @@ public class QuestionDto {
 
 		private long accountId;
 
-		public void addAccountId(long accountId) {
-			this.accountId = accountId;
-		}
+		// public void addAccountId(long accountId) {
+		// 	this.accountId = accountId;
+		// }
 	}
 
 	@Getter
@@ -34,5 +35,13 @@ public class QuestionDto {
 		public void addQuestionId(long questionId) {
 			this.questionId = questionId;
 		}
+	}
+
+	@AllArgsConstructor
+	public static class Response {
+		private long questionId;
+		private String title;
+		private String content;
+		private long accountId;
 	}
 }
