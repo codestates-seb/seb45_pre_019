@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      <h1>도비즈 화이팅!!</h1>
+      <h1>도비즈 화이팅!!!</h1>
       <Header />
       <Sidebar />
       <Footer />
