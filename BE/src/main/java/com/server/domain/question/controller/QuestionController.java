@@ -4,6 +4,7 @@ import com.server.domain.question.dto.QuestionDto;
 import com.server.domain.question.entity.Question;
 import com.server.domain.question.mapper.QuestionMapper;
 import com.server.domain.question.service.QuestionService;
+import com.server.global.argumentsresolver.LoginAccountId;
 import com.server.global.common.dto.SingleResDto;
 
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,9 @@ public class QuestionController {
 	private final QuestionMapper mapper;
 
 	@PostMapping("/post") // 질문 등록
-	public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post postDto) {
+	public ResponseEntity postQuestion(@LoginAccountId long accountId, @Valid @RequestBody QuestionDto.Post postDto) {
 
+		postDto.addAccountId(accountId);
 		Question createQuestion = questionService.createQuestion(mapper.questionPostDtoToQuestion(postDto));
 		URI location = UriComponentsBuilder.newInstance()
 			.build(QNA_QUESTION_DEFAULT_URL, createQuestion.getQuestionId());
@@ -37,12 +39,17 @@ public class QuestionController {
 		return ResponseEntity.created(location).build();
 	}
 
-	@PatchMapping("/{question_id}")
-	public ResponseEntity<SingleResDto<String>> patchQuestion(@PathVariable("question_id") long questionId,
+	@PatchMapping("/update/{question_id}")
+	public ResponseEntity<SingleResDto<String>> patchQuestion( @LoginAccountId long accountId,
+																@PathVariable("question_id") long questionId,
 																@Valid @RequestBody QuestionDto.Patch patchDto) {
+		patchDto.addAccountId(accountId);
+		patchDto.addQuestionId(questionId);
 		Question updateQuestion = questionService.updateQuestion(mapper.questionPatchDtoToQuestion(patchDto));
 
 		return new ResponseEntity(new SingleResDto<String>("success modify question"), HttpStatus.OK);
 
 	}
+
+
 }
