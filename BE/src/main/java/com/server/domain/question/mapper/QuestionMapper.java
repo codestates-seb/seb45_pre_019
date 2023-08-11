@@ -15,4 +15,5 @@ public interface QuestionMapper {
 	@Mapping(source = "accountId", target = "account.accountId")
 	Question questionPatchDtoToQuestion(QuestionDto.Patch patchDto);
 
+
 }

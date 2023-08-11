@@ -1,5 +1,6 @@
 package com.server.domain.question.service;
 
+import java.util.List;
 import java.util.Optional;
 import com.server.domain.account.service.AccountService;
 import com.server.domain.question.entity.Question;
@@ -42,6 +43,15 @@ public class QuestionService {
 
 		 return questionRepository.save(findQuestion);
 
+	}
+
+	public Question findQuestion(long questionId) {
+		return questionRepository.findByIdWithAll(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_QUESTION));
+	}
+
+	public List<Question> findQuestions(String keyword) {
+		List<Question> questionList = questionRepository.findByQuestionTitleContaining(keyword);
+		return questionList;
 	}
 
 
