@@ -5,6 +5,8 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 
+import com.server.domain.question.entity.Question;
+
 public class QuestionDto {
 
 	@Getter
@@ -48,5 +50,12 @@ public class QuestionDto {
 		private String title;
 		private String content;
 		private long accountId;
+
+		public Response(Question question) {
+			this.questionId = questionId;
+			this.title = title;
+			this.content = content;
+			this.accountId = accountId;
+		}
 	}
 }
