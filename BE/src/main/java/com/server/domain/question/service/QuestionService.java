@@ -1,10 +1,6 @@
 package com.server.domain.question.service;
 
 import java.util.Optional;
-import java.util.function.LongFunction;
-
-import javax.swing.text.html.Option;
-
 import com.server.domain.account.service.AccountService;
 import com.server.domain.question.entity.Question;
 import com.server.domain.question.repository.QuestionRepository;
@@ -15,14 +11,16 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class QuestionService {
 	private final QuestionRepository questionRepository;
 	private final AccountService accountService;
 
 	public Question createQuestion(Question question) {
-		// Question createQuestion = accountService.findMember(question.getAccount.getAccountId()); 존재하는 회원인지 검증
+		// 등록된 회원인지 확인
+		Long loginAccountId = question.getAccount().getAccountId();
+		accountService.findAccount(loginAccountId);
 
 		return questionRepository.save(question);
 	}
@@ -30,7 +28,7 @@ public class QuestionService {
 	public Question updateQuestion(Question question) {
 		//등록된 회원인지 확인
 		Long loginAccountId = question.getAccount().getAccountId();
-		// Question questionAccount = accountService.findAccount(loginAccountId);
+		accountService.findAccount(loginAccountId);
 
 		// 등록된 질문이 맞는지 검증
 		Long questionId = question.getQuestionId();
@@ -39,11 +37,11 @@ public class QuestionService {
 		// 수정 권한 확인 --> 질문을 등록한 아이디와 일치하는지
 		verifyAccess(findQuestion, loginAccountId);
 
-		// Optional.ofNullable(question.getQuestionTitle()).ifPresent(title -> questionAccount.setQuestionTitle(title));
-		// Optional.ofNullable(question.getQuestionContent()).ifPresent(content -> questionAccount.setQuestionContent(content));
+		Optional.ofNullable(question.getQuestionTitle()).ifPresent(title -> findQuestion.setQuestionTitle(title));
+		Optional.ofNullable(question.getQuestionContent()).ifPresent(content -> findQuestion.setQuestionContent(content));
 
-		// return questionRepository.save(questionMember);
-		return questionRepository.save(question); // 주석 해제 전까지 임의 작성한 것
+		 return questionRepository.save(findQuestion);
+
 	}
 
 

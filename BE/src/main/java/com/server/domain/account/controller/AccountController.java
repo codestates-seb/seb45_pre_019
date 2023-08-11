@@ -29,13 +29,18 @@ public class AccountController {
 	public ResponseEntity<HttpStatus> postSignUp(@Valid AccountDto.SignUp signUp) {
 
 		signUp.setAccountPassword(passwordEncoder.encode(signUp.getAccountPassword()));
-		accountService.signUp(accountMapper.signUpToAccount(signUp));
+		accountService.signUp(accountMapper.signUpDtoToAccount(signUp));
 
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/login")
-	public String postLogin() {
-		return "";
+	@GetMapping("/login-page")
+	public String loginPage() {
+		return "login";
+	}
+
+	@PostMapping("/login")
+	public String login() {
+		return "main";
 	}
 }
