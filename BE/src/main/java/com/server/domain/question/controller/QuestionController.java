@@ -18,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -39,15 +40,32 @@ public class QuestionController {
 		return ResponseEntity.created(location).build();
 	}
 
-	@PatchMapping("/update/{question_id}")
+	@PatchMapping("/update/{question-id}")
 	public ResponseEntity<SingleResDto<String>> patchQuestion( @LoginAccountId long accountId,
-																@PathVariable("question_id") long questionId,
+																@PathVariable("question-id") long questionId,
 																@Valid @RequestBody QuestionDto.Patch patchDto) {
 		patchDto.addAccountId(accountId);
 		patchDto.addQuestionId(questionId);
-		Question updateQuestion = questionService.updateQuestion(mapper.questionPatchDtoToQuestion(patchDto));
+		questionService.updateQuestion(mapper.questionPatchDtoToQuestion(patchDto));
 
 		return new ResponseEntity(new SingleResDto<String>("success modify question"), HttpStatus.OK);
+
+	}
+
+	@GetMapping("/details/{question-id}")
+	public ResponseEntity detailsQuestion(@PathVariable Long questionId) {
+
+		Question findQuestion = questionService.findQuestion(questionId);
+		QuestionDto.Response responseDto = new QuestionDto.Response(findQuestion);
+
+		return new ResponseEntity<>(responseDto, HttpStatus.OK);
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity questions(@RequestParam String keyword) {
+		List<Question> questionList = questionService.findQuestions(keyword);
+
+		return new ResponseEntity(questionList, HttpStatus.OK);
 
 	}
 
