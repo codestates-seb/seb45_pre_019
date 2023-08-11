@@ -1,44 +1,44 @@
-import react from "react";
+// import react from "react";
 import styled from "styled-components";
 
 const HeaderContainer = styled.header`
   background-color: white;
   border-top: 3px solid orange;
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   padding: 1rem; /* 흰색 줄 */
 `;
 
-const MenuIconContainer = styled.div`
-  width: 40px; 
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 1rem; 
-  background-color: #f1f1f1;
-  border-radius: 0; /* 메뉴 아이콘 컨테이너 */
-`;
+// const MenuIconContainer = styled.div`
+//   width: 40px;
+//   height: 40px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   margin-right: 1rem;
+//   background-color: #f1f1f1;
+//   border-radius: 0; /* 메뉴 아이콘 컨테이너 */
+// `;
 
 const MenuIconImg = styled.img`
-  width: 20px; 
+  width: 20px;
   height: auto;
   margin-right: 1rem; /* 메뉴 아이콘 */
 `;
 
-const LogoAndTextContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 1rem; /* 로고 컨테이너 */
-`;
+// const LogoAndTextContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-right: 1rem; /* 로고 컨테이너 */
+// `;
 
 const LogoImg = styled.img`
-  width: 100px; 
-  height: auto;  /*로고 아이콘 */
+  width: 100px;
+  height: auto; /*로고 아이콘 */
 `;
 
 const StackOverflowText = styled.span`
-  font-weight: bold;     /* 스택 오버 플로우 텍스트 */
+  font-weight: bold; /* 스택 오버 플로우 텍스트 */
 `;
 
 const SearchContainer = styled.div`
@@ -46,13 +46,13 @@ const SearchContainer = styled.div`
   align-items: center;
   border: 5px solid #ccc;
   padding: 5px;
-  margin-left: auto;    /*  검색창 */
+  margin-left: auto; /*  검색창 */
 `;
 
 const SearchIcon = styled.img`
-  width: 20px; 
+  width: 20px;
   height: auto;
-  margin-right: 5px;   /* 돋보기 아이콘*/
+  margin-right: 5px; /* 돋보기 아이콘*/
 `;
 
 const SearchText = styled.span`
@@ -100,7 +100,8 @@ function Header() {
       <MenuIconImg src="/path/to/your/menu-icon.png" alt="menu.png" />
       <LogoImg src="/path/to/your/logo.png" alt="logo.png" />
       <HeaderTitle>
-        {스타일드 컴포넌트 헤더}<StackOverflowText>Stack Overflow</StackOverflowText>
+        {/* 스타일드 컴포넌트 헤더 */}
+        <StackOverflowText>Stack Overflow</StackOverflowText>
       </HeaderTitle>
       <SearchContainer>
         <SearchIcon src="/path/to/your/search-icon.png" alt="search.png" />

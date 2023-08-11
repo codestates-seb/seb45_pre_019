@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { styled } from "styled-components";
-import teamsImg from "../assets/teamsImg.png";
+import teamsImg from "../assets/images/teamsImg.png";
 import { ReactComponent as GlobeIcon } from "../assets/icons/globe.svg";
 import { ReactComponent as StarIcon } from "../assets/icons/star.svg";
 
@@ -93,7 +93,6 @@ const ListItem = styled.li`
 `;
 
 const ListTitle = styled.span`
-  display: inline-block;
   margin: 0 0 4px 8px;
   font-size: 11px;
 `;
@@ -149,6 +148,7 @@ const ButtonArea = styled.div`
 `;
 
 const Button = styled.button`
+  border: none;
   margin-top: 4px;
   padding: 6px;
   border-radius: 6px;

@@ -46,7 +46,8 @@ const GlobalStyles = createGlobalStyle`
   }
 
   input {
-    border: none;
+    border: 1px solid var(--color-line);
+  	border-radius: 6px;
   }
 
   input:focus-visible {
@@ -54,13 +55,33 @@ const GlobalStyles = createGlobalStyle`
   }
 
   textarea {
-    border: none;
+    border: 1px solid var(--color-line);
+  	border-radius: 6px;
   }
 
   button {
-    border: none;
+    border: 1px solid var(--color-line);
+	  border-radius: 6px;
     background: none;
     cursor: pointer;
+  }
+
+  span {
+    display: inline-block;
+  }
+
+  /* Layout */
+  .container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1264px;
+    margin: 0 auto;
+  }
+
+  .content {
+    width: calc(100% - 164px);
+    max-width: 1100px;
   }
 `;
 
