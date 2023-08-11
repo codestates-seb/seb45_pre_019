@@ -24,11 +24,8 @@ public class AccountController {
 
 	private final AccountService accountService;
 	private final AccountMapper accountMapper;
-	private PasswordEncoder passwordEncoder;
 	@PostMapping("/signup")
 	public ResponseEntity<HttpStatus> postSignUp(@Valid AccountDto.SignUp signUp) {
-
-		signUp.setAccountPassword(passwordEncoder.encode(signUp.getAccountPassword()));
 		accountService.signUp(accountMapper.signUpDtoToAccount(signUp));
 
 		return new ResponseEntity<>(HttpStatus.CREATED);
