@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+import com.server.domain.question.entity.Question;
 import com.server.global.auditing.TimeStamp;
 
 import lombok.AllArgsConstructor;
@@ -36,6 +40,14 @@ public class Account extends TimeStamp {
 	@Column(name = "account_password")
 	private String accountPassword;
 
-	// @OneToMany(mappedBy = "account")
-	// private List<Question> questions = new ArrayList<>();
+	@OneToMany(mappedBy = "account")
+	private List<Question> questions = new ArrayList<>();
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles = new ArrayList<>();
+
+	public enum AccountRole {
+		ROLE_USER,
+		ROLE_ADMIN
+	}
 }
