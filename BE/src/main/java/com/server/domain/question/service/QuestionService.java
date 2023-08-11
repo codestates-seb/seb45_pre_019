@@ -18,6 +18,9 @@ public class QuestionService {
 	private final AccountService accountService;
 
 	public Question createQuestion(Question question) {
+		// 등록된 회원인지 확인
+		Long loginAccountId = question.getAccount().getAccountId();
+		accountService.findAccount(loginAccountId);
 
 		return questionRepository.save(question);
 	}
