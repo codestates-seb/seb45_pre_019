@@ -2,6 +2,9 @@ package com.server.domain.question.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.swing.*;
+
 import com.server.domain.account.service.AccountService;
 import com.server.domain.question.entity.Question;
 import com.server.domain.question.repository.QuestionRepository;
@@ -45,17 +48,20 @@ public class QuestionService {
 
 	}
 
-	public Question findQuestion(long questionId) {
+	// 특정 질문 조회
+	public Question findQuestion(Long questionId) {
 		return questionRepository.findByIdWithAll(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_QUESTION));
 	}
 
-	public List<Question> findQuestions(String keyword) {
-		List<Question> questionList = questionRepository.findByQuestionTitleContaining(keyword);
-		return questionList;
+	// 전체 조회 및 검색 조건으로 조회
+	public List<Question> searchQuestions(String title, String name) {
+		List<Question> searchList = questionRepository.findByQuestionTitleContainingAndAccountAccountNameContaining(title, name);
+
+		return searchList;
 	}
 
 
-	private Question existsQuestion(long questionId) { // 동록된 질문이 맞는지 검증
+	private Question existsQuestion(Long questionId) { // 동록된 질문이 맞는지 검증
 		return questionRepository.findById(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_QUESTION));
 	}
 

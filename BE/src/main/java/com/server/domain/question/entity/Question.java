@@ -19,7 +19,7 @@ import java.util.List;
 public class Question extends TimeStamp {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long questionId;
+	private Long questionId;
 
 	@Column(nullable = false, name = "question_title")
 	private String questionTitle;
@@ -27,9 +27,11 @@ public class Question extends TimeStamp {
 	@Column(columnDefinition = "TEXT", nullable = false, name = "question_content")
 	private String questionContent;
 
-	   @ManyToOne
-	   @JoinColumn(name = "account_id")
-	   private Account account;
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
+
+
 
 	//    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
 	//    private List<Answer> answers;
