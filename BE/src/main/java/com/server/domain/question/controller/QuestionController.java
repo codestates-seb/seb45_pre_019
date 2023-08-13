@@ -18,7 +18,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,9 +32,9 @@ public class QuestionController {
 	private final QuestionMapper mapper;
 
 	@PostMapping("/post") // 질문 등록
-	public ResponseEntity postQuestion(@LoginAccountId long accountId, @Valid @RequestBody QuestionDto.Post postDto) {
+	public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postDto) { // + @LoginAccountId Long accountId
 
-		postDto.addAccountId(accountId);
+		postDto.addAccountId(1L);
 		Question createQuestion = questionService.createQuestion(mapper.questionPostDtoToQuestion(postDto));
 		URI location = UriComponentsBuilder.newInstance()
 			.build(QNA_QUESTION_DEFAULT_URL, createQuestion.getQuestionId());
@@ -41,10 +43,9 @@ public class QuestionController {
 	}
 
 	@PatchMapping("/update/{question-id}")
-	public ResponseEntity<SingleResDto<String>> patchQuestion( @LoginAccountId long accountId,
-																@PathVariable("question-id") long questionId,
-																@Valid @RequestBody QuestionDto.Patch patchDto) {
-		patchDto.addAccountId(accountId);
+	public ResponseEntity<SingleResDto<String>> patchQuestion(@PathVariable("question-id") Long questionId,
+																@Valid @RequestBody QuestionDto.Patch patchDto) { // + @LoginAccountId Long accountId
+		patchDto.addAccountId(1L);
 		patchDto.addQuestionId(questionId);
 		questionService.updateQuestion(mapper.questionPatchDtoToQuestion(patchDto));
 
@@ -53,19 +54,24 @@ public class QuestionController {
 	}
 
 	@GetMapping("/details/{question-id}")
-	public ResponseEntity detailsQuestion(@PathVariable Long questionId) {
+	public ResponseEntity detailsQuestion(@PathVariable("question-id") Long questionId) {
 
 		Question findQuestion = questionService.findQuestion(questionId);
+
 		QuestionDto.Response responseDto = new QuestionDto.Response(findQuestion);
 
 		return new ResponseEntity<>(responseDto, HttpStatus.OK);
 	}
 
-	@GetMapping("/search")
-	public ResponseEntity questions(@RequestParam String keyword) {
-		List<Question> questionList = questionService.findQuestions(keyword);
+	@GetMapping("/search") // 전체 조회 및 제목 검색 및 사용자 이름 검색
+	public ResponseEntity questions(@RequestParam(required = false) String title,
+									@RequestParam(required = false) String name) {
+		List<Question> questionList = questionService.searchQuestions(title, name);
+		List<QuestionDto.Response> responses = questionList.stream()
+			.map(QuestionDto.Response::new)
+			.collect(Collectors.toList());
 
-		return new ResponseEntity(questionList, HttpStatus.OK);
+		return new ResponseEntity(responses, HttpStatus.OK);
 
 	}
 
