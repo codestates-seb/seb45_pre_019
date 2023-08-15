@@ -45,10 +45,11 @@ public class QuestionDto {
 			this.accountId = accountId;
 		}
 
-	}
 
-	@AllArgsConstructor
+	}
 	@Getter
+	@AllArgsConstructor
+	@NoArgsConstructor
 	public static class Response {
 		private Long questionId;
 		private String questionTitle;
