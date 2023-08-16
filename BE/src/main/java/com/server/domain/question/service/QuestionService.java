@@ -2,6 +2,8 @@ package com.server.domain.question.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import com.server.domain.account.service.AccountService;
 import com.server.domain.question.entity.Question;
 import com.server.domain.question.repository.QuestionRepository;
@@ -17,14 +19,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class QuestionService {
 	private final QuestionRepository questionRepository;
 	private final AccountService accountService;
 
 	public Question createQuestion(Question question) {
 		// 등록된 회원인지 확인
-		Long loginAccountId = question.getAccount().getAccountId();
-		accountService.findAccount(loginAccountId);
+		 Long loginAccountId = question.getAccount().getAccountId();
+		 accountService.findAccount(loginAccountId);
 
 		return questionRepository.save(question);
 	}
@@ -36,7 +39,7 @@ public class QuestionService {
 
 		// 등록된 질문이 맞는지 검증
 		Long questionId = question.getQuestionId();
-		Question findQuestion = existsQuestion(questionId);
+		Question findQuestion = verifiedExistsQuestion(questionId);
 
 		// 수정 권한 확인 --> 질문을 등록한 아이디와 일치하는지
 		verifyAccess(findQuestion, loginAccountId);
@@ -49,7 +52,11 @@ public class QuestionService {
 	}
 	// 특정 질문 조회
 	public Question findQuestion(Long questionId) {
-		return questionRepository.findByIdWithAll(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_QUESTION));
+
+		Question findQuestion = questionRepository.findByIdWithAll(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_QUESTION));
+		findQuestion.addViews(findQuestion.getViews());
+
+		return findQuestion;
 	}
 
 
@@ -81,9 +88,7 @@ public class QuestionService {
 		return searchList;
 	}
 
-
-
-	private Question existsQuestion(Long questionId) { // 동록된 질문이 맞는지 검증
+	private Question verifiedExistsQuestion(Long questionId) { // 동록된 질문이 맞는지 검증
 		return questionRepository.findById(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_QUESTION));
 	}
 

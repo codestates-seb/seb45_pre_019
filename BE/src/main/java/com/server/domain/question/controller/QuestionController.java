@@ -67,7 +67,7 @@ public class QuestionController {
 		return new ResponseEntity<>(responseDto, HttpStatus.OK);
 	}
 
-	@GetMapping // 전체 게시글 조회 및 필터 정렬을 위한 sort
+	@GetMapping("/questionList") // 전체 게시글 조회 및 필터 정렬을 위한 sort
 	public ResponseEntity<PageDto<QuestionDto.Response>> getQuestions(@Positive @RequestParam int page, @RequestParam String sort) {
 		Page<Question> getQuestions = questionService.findQuestions(page - 1, sort);
 		Page<QuestionDto.Response> questionList = getQuestions.map(QuestionDto.Response::new);
@@ -76,7 +76,6 @@ public class QuestionController {
 
 		return new ResponseEntity(responsePageDto, HttpStatus.OK);
 	}
-
 
 
 	@GetMapping("/search") // 제목 검색 및 사용자 이름 검색
@@ -90,6 +89,11 @@ public class QuestionController {
 
 		return new ResponseEntity(pageDto, HttpStatus.OK);
 
+	}
+
+	@DeleteMapping("/delete/{question-id}")
+	public ResponseEntity deleteQuestions() {
+		return null;
 	}
 
 
