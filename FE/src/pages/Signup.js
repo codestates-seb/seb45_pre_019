@@ -6,8 +6,8 @@ import { ReactComponent as VoteUpDown } from "../assets/icons/voteUpDown.svg";
 import { ReactComponent as Bookmark } from "../assets/icons/bookmark.svg";
 import { ReactComponent as Trophy } from "../assets/icons/trophy.svg";
 import { ReactComponent as QuestionCircle } from "../assets/icons/questionCircle.svg";
-import OauthButtonArea from "../components/membership/OauthButtonArea";
-import BottomTextArea from "../components/membership/BottomTextArea";
+import OauthButtonArea from "../components/login,signup/OauthButtonArea";
+import BottomTextArea from "../components/login,signup/BottomTextArea";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 
@@ -100,8 +100,7 @@ const Signup = () => {
 
     try {
       const response = await fetch(
-        // "http://ec2-15-164-93-106.ap-northeast-2.compute.amazonaws.com/account/signup",
-        `${process.env.REACT_APP_API_URL}/account/signup`,
+        `${process.env.REACT_APP_API_URL}:8080/account/signup`,
         // "http://localhost:8080/signup",
         {
           method: "POST",
@@ -122,19 +121,20 @@ const Signup = () => {
       console.log("response", response);
 
       // 401 에러시 ex.
-      if (response.status === 401) {
-        setPassword("");
-        setIsEmailError(true);
-        setEamilErrorMessage("The email is not a valid email address.");
-        return;
-      }
+      // if (response.status === 401) {
+      //   setPassword("");
+      //   setIsEmailError(true);
+      //   setEamilErrorMessage("The email is not a valid email address.");
+      //   return;
+      // }
 
       if (!response.ok) {
         throw new Error(`${response.status} 에러발생!.!`);
       }
 
-      const data = await response.json();
-      console.log("RESPONSE DATA", data);
+      // const data = await response.json();
+      // console.log(data);
+      // console.log("RESPONSE DATA", data);
 
       window.alert("회원가입이 완료되었습니다.");
       navigate("/");

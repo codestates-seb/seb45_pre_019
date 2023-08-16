@@ -4,12 +4,25 @@ import { styled } from "styled-components";
 import { ReactComponent as StackoverflowLogo } from "../assets/icons/stackoverflowLogo.svg";
 
 // import { ReactComponent as AlertIcon } from "../assets/icons/alertCircle.svg";
-import OauthButtonArea from "../components/membership/OauthButtonArea";
-import BottomTextArea from "../components/membership/BottomTextArea";
+import OauthButtonArea from "../components/login,signup/OauthButtonArea";
+import BottomTextArea from "../components/login,signup/BottomTextArea";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 
 const Login = () => {
+  // 만료시간 설정 (이거 다 함수로 ? 만들어서 빼놓기...)
+  const storedExpirationDate = localStorage.getItem("tokenExpiration");
+  const expirationDate = new Date(storedExpirationDate);
+  const now = new Date();
+  console.log(expirationDate);
+  console.log(now);
+  const duration = expirationDate.getTime() - now.getTime();
+  console.log(duration);
+  // 만료시간 : Thu Aug 17 2023 01:39:29 GMT+0900 (한국 표준시)
+
+  // 만료시간이 지나면 토큰 삭제 코드
+  // const tokenDuration = duration;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,9 +34,6 @@ const Login = () => {
 
   const isEmailValidCheck = email.includes("@");
   const isPasswordValidCheck = password.length > 0; // 일단 1글자 이상이면 백엔드에 요청은 보내는걸로.
-  // const isPasswordValidCheck = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(
-  //   password,
-  // ); // 회원가입시 validation
 
   const navigate = useNavigate();
 
@@ -83,17 +93,19 @@ const Login = () => {
   // 로그인 fetch
   const fetchLogin = async () => {
     console.log("🚀 FETCH_LOGIN");
-
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/account/login`,
+        `${process.env.REACT_APP_API_URL}:8080/account/login`,
         // "http://localhost:8080/login",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({
+            accountEmail: email,
+            accountPassword: password,
+          }),
         },
       );
 
@@ -111,12 +123,25 @@ const Login = () => {
         throw new Error(`${response.status} 에러발생!.!`);
       }
 
-      const data = await response.json();
-      const token = data.token; // 만약 토큰을 받아온다면??????
-      console.log(data);
-      console.log(token);
+      // 토큰 가져오기 - 확인해보기
+      const authHeader = response.headers.get("Authorization");
+      if (authHeader && authHeader.startsWith("Bearer ")) {
+        const token = authHeader.substring(7); // "Bearer " 접두어 제외
+        localStorage.setItem("ACCESS-TOKEN", token); // 토큰 저장
+      }
 
-      // localStorage.setItem("preProjectToken", token); // 토큰 저장
+      // 토큰 만료 시간 설정을 위한 세팅
+      const expiration = new Date();
+      console.log("토큰실행시간", expiration);
+      expiration.setHours(expiration.getHours() + 1);
+      console.log("토큰만료시간", expiration);
+      localStorage.setItem("tokenExpiration", expiration);
+
+      // const now = new Date();
+      // const duration = expiration.getTime() - now.getTime();
+      // // 토큰 만료 시간 - 현재 시간
+      // // 만료 시기가 아직 미래라 토큰이 유효하다면 양수, 만료 시기가 지났다면 음수가 나옴
+      // console.log("duration", duration)
 
       navigate("/");
     } catch (error) {
