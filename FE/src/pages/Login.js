@@ -85,13 +85,17 @@ const Login = () => {
     console.log("🚀 FETCH_LOGIN");
 
     try {
-      const response = await fetch("http://localhost:8080/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/account/login`,
+        // "http://localhost:8080/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
         },
-        body: JSON.stringify({ email: email, password: password }),
-      });
+      );
 
       console.log("response", response);
 
@@ -117,7 +121,7 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       // console.log("error is", error);
-      console.warn("error is", error);
+      console.warn("CATCH ERROR IS", error);
     }
   };
 
@@ -177,7 +181,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
 
   > svg {
     margin-bottom: 24px;

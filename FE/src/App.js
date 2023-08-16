@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
-// import Header from "./components/Header";
-// import Sidebar from "./components/Sidebar";
-// import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
@@ -10,9 +10,9 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      {/* <Header /> */}
+      <Header />
       <div className="container">
-        {/* <Sidebar /> */}
+        <Sidebar />
         <div className="content">
           <main>
             <Routes>
@@ -35,7 +35,7 @@ function App() {
           </main>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
