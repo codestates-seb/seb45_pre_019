@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://doby-db.cpuwfu351hdj.ap-northeast-2.rds.amazonaws.com:13306/stackoverflow?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&serverTimezone=Asia/Seoul&useSSL=true
-    username: doby
-    password: doby1234
+    username: ${MYSQLUSERNAME}
+    password: ${MYSQLPASSWORD}
 
   jpa:
     database: mysql
