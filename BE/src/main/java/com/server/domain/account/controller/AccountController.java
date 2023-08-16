@@ -1,5 +1,6 @@
 package com.server.domain.account.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -26,9 +27,14 @@ public class AccountController {
 	private final AccountService accountService;
 	private final AccountMapper accountMapper;
 	@PostMapping("/signup")
-	public ResponseEntity<Account> postSignUp(@Valid @RequestBody AccountDto.SignUp signUp) {
-		// accountService.signUp(accountMapper.signUpDtoToAccount(signUp));
+	public ResponseEntity<HttpStatus> signUp(@Valid @RequestBody AccountDto.SignUp signUp) {
+		accountService.signUp(accountMapper.signUpDtoToAccount(signUp));
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
 
-		return new ResponseEntity<>(accountMapper.signUpDtoToAccount(signUp), HttpStatus.CREATED);
+	@PostMapping(value = "/login")
+	public ResponseEntity<String> login(@Valid @RequestBody AccountDto.Login login, HttpServletResponse response) throws Exception {
+		String token = accountService.login(accountMapper.loginDtoToAccount(login), response);
+		return new ResponseEntity<>(token, HttpStatus.OK);
 	}
 }

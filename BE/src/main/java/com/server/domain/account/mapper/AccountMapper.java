@@ -10,4 +10,5 @@ import com.server.domain.account.entity.Account;
 public interface AccountMapper {
 
 	Account signUpDtoToAccount(AccountDto.SignUp signUp);
+	Account loginDtoToAccount(AccountDto.Login login);
 }

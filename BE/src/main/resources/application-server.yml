@@ -1,7 +1,8 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/stackoverflow?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
+#    createDatabaseIfNotExist=true&
+    url: jdbc:mysql://localhost:3306/stackoverflow?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&serverTimezone=Asia/Seoul&useSSL=true
     username: ${MYSQLUSERNAME}
     password: ${MYSQLPASSWORD}
 
@@ -9,8 +10,13 @@ spring:
     database: mysql
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
