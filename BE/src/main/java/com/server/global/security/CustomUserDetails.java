@@ -24,6 +24,10 @@ public class CustomUserDetails implements UserDetails {
 		)).collect(Collectors.toList());
 	}
 
+	public Long getAccountId() {
+		return account.getAccountId();
+	}
+
 	@Override
 	public String getPassword() {
 		return account.getAccountPassword();
