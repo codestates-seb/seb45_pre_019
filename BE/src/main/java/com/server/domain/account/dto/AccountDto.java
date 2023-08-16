@@ -20,4 +20,15 @@ public class AccountDto {
 		@NotNull
 		private String accountPassword;
 	}
+
+	@Getter
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Setter
+	public static class Login {
+		@NotNull
+		private String accountEmail;
+		@NotNull
+		private String accountPassword;
+	}
 }
