@@ -4,7 +4,6 @@ spring:
     url: jdbc:mysql://doby-db.cpuwfu351hdj.ap-northeast-2.rds.amazonaws.com:13306/stackoverflow?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&serverTimezone=Asia/Seoul&useSSL=true
     username: ${MYSQLUSERNAME}
     password: ${MYSQLPASSWORD}
-
   jpa:
     database: mysql
     show-sql: true
@@ -17,3 +16,5 @@ spring:
 
 jwt:
   key: ${JWT_SECRET_KEY}
+server:
+  address: 0.0.0.0

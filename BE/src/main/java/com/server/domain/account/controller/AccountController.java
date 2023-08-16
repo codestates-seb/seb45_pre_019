@@ -21,11 +21,16 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/account")
+@RequestMapping("/account") //localhost:8080/account/signup
 public class AccountController {
 
 	private final AccountService accountService;
 	private final AccountMapper accountMapper;
+
+	@GetMapping("/test")
+	public String test() {
+		return "Login Test!";
+	}
 	@PostMapping("/signup")
 	public ResponseEntity<HttpStatus> signUp(@Valid @RequestBody AccountDto.SignUp signUp) {
 		accountService.signUp(accountMapper.signUpDtoToAccount(signUp));
