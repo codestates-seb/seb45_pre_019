@@ -46,7 +46,9 @@ public class SecurityConfig {
 						config.setAllowedMethods(
 							List.of("*")
 						);
-						config.addAllowedHeader("*");
+						config.setAllowedOrigins(
+							List.of("http://localhost:3000", "http://stackoverflow-clone.s3-website.ap-northeast-2.amazonaws.com") // 프론트엔드 개발 서버 주소
+						);
 						config.setAllowCredentials(true);
 						return config;
 					};
@@ -58,8 +60,8 @@ public class SecurityConfig {
 			.authorizeRequests()
 			// 로그인 회원가입은 풀고, 질문 추가/수정/삭제는 로그인한 사용자만 가능하게
 			.antMatchers("/account/signup", "/account/login").permitAll()
-			.antMatchers("/questions/post", "/questions/update/**", "/questions/delete/**").hasRole("USER")
-			.anyRequest().hasRole("USER")
+			.antMatchers("/questions/post", "/questions/update/**", "/questions/delete/**", "/account/test").hasRole("USER")
+			.anyRequest().permitAll()
 			.and()
 			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling()
