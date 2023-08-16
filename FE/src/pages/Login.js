@@ -1,44 +1,172 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { ReactComponent as StackoverflowLogo } from "../assets/icons/stackoverflowLogo.svg";
-import { ReactComponent as OpenPageIcon } from "../assets/icons/openPage.svg";
+
 // import { ReactComponent as AlertIcon } from "../assets/icons/alertCircle.svg";
 import OauthButtonArea from "../components/OauthButtonArea";
+import BottomTextArea from "../components/BottomTextArea";
+import Card from "../UI/Card";
+import Button from "../UI/Button";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
+
+  const [emailErrorMessage, setEamilErrorMessage] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+
+  const isEmailValidCheck = email.includes("@");
+  const isPasswordValidCheck = password.length > 0; // 일단 1글자 이상이면 백엔드에 요청은 보내는걸로.
+  // const isPasswordValidCheck = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(
+  //   password,
+  // ); // 회원가입시 validation
+
+  const navigate = useNavigate();
+
+  // let formIsValid = false;
+
+  // if (isEmailValid && isPasswordValid) {
+  //   formIsValid = true;
+  // }
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    console.log("🚀 SUBMIT");
+    e.preventDefault();
+
+    // email validation check and show error message
+    if (!isEmailValidCheck) {
+      setIsEmailError(true);
+
+      if (email === "") {
+        setEamilErrorMessage("Email cannot be empty.");
+      } else {
+        setEamilErrorMessage("The email is not a valid email address.");
+      }
+    } else {
+      setIsEmailError(false);
+    }
+
+    // password validation check and show error message
+    if (!isPasswordValidCheck) {
+      setIsPasswordError(true);
+
+      if (password === "") {
+        setPasswordErrorMessage("Password cannot be empty.");
+      }
+    } else {
+      setIsPasswordError(false);
+    }
+
+    // setPassword("");
+    // setIsPasswordError(true);
+
+    // validation check 완료시 백엔드에 데이터 전송
+    if (isEmailValidCheck && isPasswordValidCheck) {
+      console.log("🚀 LOGIN");
+
+      fetchLogin();
+    }
+  };
+
+  // 로그인 fetch
+  const fetchLogin = async () => {
+    console.log("🚀 FETCH_LOGIN");
+
+    try {
+      const response = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email, password: password }),
+      });
+
+      console.log("response", response);
+
+      // 401 에러시 ex. 아이디 정보가 없는 경우
+      if (response.status === 401) {
+        setPassword("");
+        setIsEmailError(true);
+        setEamilErrorMessage("The email is not a valid email address.");
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`${response.status} 에러발생!.!`);
+      }
+
+      const data = await response.json();
+      const token = data.token; // 만약 토큰을 받아온다면??????
+      console.log(data);
+      console.log(token);
+
+      // localStorage.setItem("preProjectToken", token); // 토큰 저장
+
+      navigate("/");
+    } catch (error) {
+      // console.log("error is", error);
+      console.warn("error is", error);
+    }
+  };
+
   return (
     <Container>
       <StackoverflowLogo />
       <OauthButtonArea />
       {/* Login Form */}
-      <Form>
-        <FormDiv>
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" />
-        </FormDiv>
-        <FormDiv>
-          <FlexArea>
-            <Label htmlFor="password">Password</Label>
-            <InfoTextLink>Forgot password?</InfoTextLink>
-          </FlexArea>
-          <Input id="password" type="password" />
-        </FormDiv>
-        <LoginButton>Log in</LoginButton>
-      </Form>
-      {/* Bottom text */}
-      <TextArea>
-        <Text>
-          Don’t have an account?
-          <StyledLink to="/signup">Sign up</StyledLink>
-        </Text>
-        <Text>
-          Are you an employer?
-          <StyledLink to="https://talent.stackoverflow.com/users/login">
-            Sign up on Talent
-            <OpenPageIcon fill="#0074cc" />
-          </StyledLink>
-        </Text>
-      </TextArea>
+      <Card>
+        <form onSubmit={handleSubmit}>
+          <FormDiv>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="text"
+              value={email}
+              onChange={handleEmailChange}
+              $invalid={isEmailError}
+            />
+            {isEmailError && (
+              <Infomation $invalid={isEmailError}>
+                {emailErrorMessage}
+              </Infomation>
+            )}
+          </FormDiv>
+          <FormDiv>
+            <FlexArea>
+              <Label htmlFor="password">Password</Label>
+              <InfoTextLink>Forgot password?</InfoTextLink>
+            </FlexArea>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+              $invalid={isPasswordError}
+            />
+            {isPasswordError && (
+              <Infomation $invalid={isPasswordError}>
+                {passwordErrorMessage}
+              </Infomation>
+            )}
+          </FormDiv>
+          <Button>Log in</Button>
+        </form>
+      </Card>
+      <BottomTextArea title="Sign up" link="/signup">
+        Don’t have an account?
+      </BottomTextArea>
     </Container>
   );
 };
@@ -49,23 +177,11 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 100vh;
 
   > svg {
     margin-bottom: 24px;
   }
-`;
-
-const Form = styled.form`
-  width: 100%;
-  max-width: 288px;
-  margin: 24px 0;
-  padding: 24px;
-  border-radius: 6px;
-  background-color: var(--color-white);
-  box-shadow:
-    0 10px 24px hsla(0, 0%, 0%, 0.05),
-    0 20px 48px hsla(0, 0%, 0%, 0.05),
-    0 1px 4px hsla(0, 0%, 0%, 0.1);
 `;
 
 const FormDiv = styled.div`
@@ -96,53 +212,22 @@ const InfoTextLink = styled.span`
 const Input = styled.input`
   width: 100%;
   padding: 8px;
+  border-color: ${(props) => props.$invalid && "#d0393c"};
 
   &:focus {
-    border-color: #59a4de;
-    box-shadow: 0 0 0 4px rgba(0, 116, 204, 0.15);
+    border-color: ${(props) => (props.$invalid ? "#d0393c" : "#59a4de")};
+    box-shadow: ${(props) =>
+      props.$invalid
+        ? "0 0 0 4px rgba(194, 46, 50, 0.15)"
+        : "0 0 0 4px rgba(0, 116, 204, 0.15)"};
   }
 `;
 
-const LoginButton = styled.button`
-  border: none;
-  padding: 10px 0;
-  width: 100%;
-  background-color: var(--color-sub-blue);
-  color: var(--color-white);
-
-  &:hover {
-    background-color: #0074cc;
-  }
-`;
-
-const TextArea = styled.div`
-  padding: 16px;
-  text-align: center;
-  font-size: 13px;
-`;
-
-const Text = styled.p`
-  + p {
-    margin-top: 12px;
-  }
-`;
-
-const StyledLink = styled(Link)`
-  margin-left: 4px;
-  color: #0074cc;
-
-  & svg {
-    margin-left: 4px;
-    vertical-align: bottom;
-  }
-
-  &:hover {
-    color: #0a95ff;
-
-    & svg path {
-      fill: #0a95ff;
-    }
-  }
+const Infomation = styled.div`
+  margin: 6px 0;
+  font-size: 12px;
+  /* color: #6a737c; */
+  color: ${(props) => props.$invalid && "#d0393c"};
 `;
 
 export default Login;

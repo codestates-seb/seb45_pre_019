@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
 import { styled } from "styled-components";
-import { ReactComponent as OpenPageIcon } from "../assets/icons/openPage.svg";
 import { ReactComponent as QuestionBalloon } from "../assets/icons/questionBalloon.svg";
 import { ReactComponent as VoteUpDown } from "../assets/icons/voteUpDown.svg";
 import { ReactComponent as Bookmark } from "../assets/icons/bookmark.svg";
 import { ReactComponent as Trophy } from "../assets/icons/trophy.svg";
 import { ReactComponent as QuestionCircle } from "../assets/icons/questionCircle.svg";
 import OauthButtonArea from "../components/OauthButtonArea";
-import Card from "../components/Card";
+import BottomTextArea from "../components/BottomTextArea";
+import Card from "../UI/Card";
+import Button from "../UI/Button";
 
 const Signup = () => {
   return (
@@ -74,7 +74,7 @@ const Signup = () => {
               <Input id="marketingChkbox" type="checkbox"></Input>
               <QuestionCircle />
             </FormDiv>
-            <LoginButton>Sign up</LoginButton>
+            <Button>Sign up</Button>
             <FormBottomText>
               By clicking “Sign up”, you agree to our terms of service and
               acknowledge that you have read and understand our privacy policy
@@ -82,20 +82,9 @@ const Signup = () => {
             </FormBottomText>
           </form>
         </Card>
-        {/* Bottom text */}
-        <TextArea>
-          <Text>
-            Already have an account?
-            <StyledLink to="/login">Log in</StyledLink>
-          </Text>
-          <Text>
-            Are you an employer?
-            <StyledLink to="https://talent.stackoverflow.com/users/login">
-              Sign up on Talent
-              <OpenPageIcon fill="#0074cc" />
-            </StyledLink>
-          </Text>
-        </TextArea>
+        <BottomTextArea title="Log in" link="/login">
+          Already have an account?
+        </BottomTextArea>
       </RightContent>
     </Container>
   );
@@ -106,6 +95,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 100vh;
 
   > svg {
     margin-bottom: 24px;
@@ -198,52 +188,10 @@ const Infomation = styled.span`
   color: #6a737c;
 `;
 
-const LoginButton = styled.button`
-  border: none;
-  padding: 10px 0;
-  width: 100%;
-  background-color: var(--color-sub-blue);
-  color: var(--color-white);
-
-  &:hover {
-    background-color: #0074cc;
-  }
-`;
-
 const FormBottomText = styled.p`
   margin-top: 32px;
   color: #6a737c;
   font-size: 12px;
-`;
-
-const TextArea = styled.div`
-  padding: 16px;
-  text-align: center;
-  font-size: 13px;
-`;
-
-const Text = styled.p`
-  + p {
-    margin-top: 12px;
-  }
-`;
-
-const StyledLink = styled(Link)`
-  margin-left: 4px;
-  color: #0074cc;
-
-  & svg {
-    margin-left: 4px;
-    vertical-align: bottom;
-  }
-
-  &:hover {
-    color: #0a95ff;
-
-    & svg path {
-      fill: #0a95ff;
-    }
-  }
 `;
 
 export default Signup;
