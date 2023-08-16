@@ -41,14 +41,12 @@ public class SecurityConfig {
 					CorsConfigurationSource source = request -> {
 						CorsConfiguration config = new CorsConfiguration();
 						config.setAllowedOrigins(
-							List.of("*")
-						);
-						config.setAllowedMethods(
-							List.of("*")
-						);
-						config.setAllowedOrigins(
 							List.of("http://localhost:3000", "http://stackoverflow-clone.s3-website.ap-northeast-2.amazonaws.com") // 프론트엔드 개발 서버 주소
 						);
+						config.setAllowedMethods(
+							List.of("GET", "POST", "PUT", "DELETE", "PATCH")
+						);
+						config.setAllowedHeaders(List.of("*"));
 						config.setAllowCredentials(true);
 						return config;
 					};
