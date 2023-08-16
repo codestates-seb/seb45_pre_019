@@ -6,8 +6,8 @@ import { ReactComponent as VoteUpDown } from "../assets/icons/voteUpDown.svg";
 import { ReactComponent as Bookmark } from "../assets/icons/bookmark.svg";
 import { ReactComponent as Trophy } from "../assets/icons/trophy.svg";
 import { ReactComponent as QuestionCircle } from "../assets/icons/questionCircle.svg";
-import OauthButtonArea from "../components/OauthButtonArea";
-import BottomTextArea from "../components/BottomTextArea";
+import OauthButtonArea from "../components/membership/OauthButtonArea";
+import BottomTextArea from "../components/membership/BottomTextArea";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 

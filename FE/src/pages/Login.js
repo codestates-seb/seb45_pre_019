@@ -4,8 +4,8 @@ import { styled } from "styled-components";
 import { ReactComponent as StackoverflowLogo } from "../assets/icons/stackoverflowLogo.svg";
 
 // import { ReactComponent as AlertIcon } from "../assets/icons/alertCircle.svg";
-import OauthButtonArea from "../components/OauthButtonArea";
-import BottomTextArea from "../components/BottomTextArea";
+import OauthButtonArea from "../components/membership/OauthButtonArea";
+import BottomTextArea from "../components/membership/BottomTextArea";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 

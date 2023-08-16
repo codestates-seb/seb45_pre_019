@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
-import { ReactComponent as OpenPageIcon } from "../assets/icons/openPage.svg";
+import { ReactComponent as OpenPageIcon } from "../../assets/icons/openPage.svg";
 
 const BottomTextArea = (props) => {
   return (

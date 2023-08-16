@@ -1,4 +1,5 @@
 import react from "react"; // eslint-disable-line no-unused-vars
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import menu from "../assets/icons/menu.png";
 import logo from "../assets/images/logo.png";
@@ -104,6 +105,7 @@ const SignupButton = styled.button`
 `;
 
 function Header() {
+  const navigate = useNavigate();
   return (
     <HeaderContainer>
       <MenuIconContainer>
@@ -118,8 +120,8 @@ function Header() {
         <SearchText>search...</SearchText>
       </SearchContainer>
       <AuthButtons>
-        <LoginButton>Log In</LoginButton>
-        <SignupButton>Sign Up</SignupButton>
+        <LoginButton onClick={() => navigate("/login")}>Log In</LoginButton>
+        <SignupButton onClick={() => navigate("/signup")}>Sign Up</SignupButton>
       </AuthButtons>
     </HeaderContainer>
   );

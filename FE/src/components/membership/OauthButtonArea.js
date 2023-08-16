@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import { ReactComponent as GoogleLogo } from "../assets/icons/googleLogo.svg";
-import { ReactComponent as GithubLogo } from "../assets/icons/githubLogo.svg";
-import { ReactComponent as FacebookLogo } from "../assets/icons/facebookLogo.svg";
+import { ReactComponent as GoogleLogo } from "../../assets/icons/googleLogo.svg";
+import { ReactComponent as GithubLogo } from "../../assets/icons/githubLogo.svg";
+import { ReactComponent as FacebookLogo } from "../../assets/icons/facebookLogo.svg";
 
 const OauthButtonArea = () => {
   return (
