@@ -17,10 +17,6 @@ public class CustomUserDetails implements UserDetails {
 		this.account = account;
 	}
 
-	public final Account getMember() {
-		return account;
-	}
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return account.getRoles().stream().map(o -> new SimpleGrantedAuthority(
