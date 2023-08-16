@@ -1,5 +1,6 @@
 package com.server.domain.account.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,8 @@ public class AccountController {
 	}
 
 	@PostMapping(value = "/login")
-	public ResponseEntity<String> login(@Valid @RequestBody AccountDto.Login login) throws Exception {
-		String token = accountService.login(accountMapper.loginDtoToAccount(login));
+	public ResponseEntity<String> login(@Valid @RequestBody AccountDto.Login login, HttpServletResponse response) throws Exception {
+		String token = accountService.login(accountMapper.loginDtoToAccount(login), response);
 		return new ResponseEntity<>(token, HttpStatus.OK);
 	}
 }

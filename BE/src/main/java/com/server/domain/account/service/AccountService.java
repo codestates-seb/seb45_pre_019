@@ -3,6 +3,7 @@ package com.server.domain.account.service;
 import java.util.Collections;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,7 +42,7 @@ public class AccountService {
 		accountRepository.save(newAccount);
 	}
 
-	public String login(Account account) throws Exception {
+	public String login(Account account, HttpServletResponse response) throws Exception {
 		Account findAccount = accountRepository.findByAccountEmail(account.getAccountEmail())
 			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.LOGIN_FAILURE));
 
@@ -49,7 +50,7 @@ public class AccountService {
 			throw new BusinessLogicException(ExceptionCode.LOGIN_FAILURE);
 		}
 
-		return jwtProvider.createToken(findAccount.getAccountEmail(), findAccount.getRoles());
+		return jwtProvider.createToken(findAccount.getAccountEmail(), findAccount.getRoles(), response);
 	}
 
 	// 회원조회

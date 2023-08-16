@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,16 +43,20 @@ public class JwtProvider {
 	}
 
 	// 토큰 생성
-	public String createToken(String account, List<Authority> roles) {
+	public String createToken(String account, List<Authority> roles, HttpServletResponse response) {
 		Claims claims = Jwts.claims().setSubject(account);
 		claims.put("roles", roles);
 		Date now = new Date();
-		return Jwts.builder()
+		String token = Jwts.builder()
 			.setClaims(claims)
 			.setIssuedAt(now)
 			.setExpiration(new Date(now.getTime() + exp))
 			.signWith(secretKey, SignatureAlgorithm.HS256)
 			.compact();
+
+		response.setHeader("Authorization", "Bearer " + token);
+
+		return token;
 	}
 
 	// 권한정보 획득

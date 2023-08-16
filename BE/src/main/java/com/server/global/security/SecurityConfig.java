@@ -46,6 +46,8 @@ public class SecurityConfig {
 						config.setAllowedMethods(
 							List.of("*")
 						);
+						config.addAllowedHeader("*");
+						config.setAllowCredentials(true);
 						return config;
 					};
 					c.configurationSource(source);
@@ -57,7 +59,7 @@ public class SecurityConfig {
 			// 로그인 회원가입은 풀고, 질문 추가/수정/삭제는 로그인한 사용자만 가능하게
 			.antMatchers("/account/signup", "/account/login").permitAll()
 			.antMatchers("/questions/post", "/questions/update/**", "/questions/delete/**").hasRole("USER")
-			.anyRequest().permitAll()
+			.anyRequest().hasRole("USER")
 			.and()
 			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling()
