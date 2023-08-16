@@ -16,6 +16,7 @@ import com.server.domain.account.dto.AccountDto;
 import com.server.domain.account.entity.Account;
 import com.server.domain.account.mapper.AccountMapper;
 import com.server.domain.account.service.AccountService;
+import com.server.global.argumentsresolver.LoginAccountIdResolver;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +30,7 @@ public class AccountController {
 
 	@GetMapping("/test")
 	public String test() {
+		System.out.println(LoginAccountIdResolver.getAccountId());
 		return "Login Test!";
 	}
 	@PostMapping("/signup")
