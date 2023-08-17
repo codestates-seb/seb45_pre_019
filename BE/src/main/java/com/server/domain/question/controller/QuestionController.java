@@ -85,10 +85,14 @@ public class QuestionController {
 
 	}
 
-	// @DeleteMapping("/delete/{question-id}")
-	// public ResponseEntity deleteQuestion(@PathVariable("question-id") Long questionId) {
-	// 	return null;
-	// }
+	@DeleteMapping("/delete/{question-id}")
+	public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId){
+
+		Long loginAccountId = LoginAccountIdResolver.getAccountId();
+		questionService.deleteQuestion(questionId, loginAccountId);
+
+		return ResponseEntity.noContent().build();
+	}
 
 
 }
