@@ -1,4 +1,4 @@
-# (1) base-image
+# (1) base - image
 FROM openjdk:11
 
 # (2) COPY에서 사용될 경로 변수
