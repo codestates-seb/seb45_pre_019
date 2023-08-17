@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.server.domain.question.entity.Question;
+import com.server.domain.vote.entity.Vote;
 import com.server.global.auditing.TimeStamp;
 
 import lombok.AllArgsConstructor;
@@ -49,6 +50,9 @@ public class Account extends TimeStamp {
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Builder.Default
 	private List<Authority> roles = new ArrayList<>();
+
+	@OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE)
+	private List<Vote> votes = new ArrayList<>();
 
 	public void setRoles(List<Authority> role) {
 		this.roles = role;

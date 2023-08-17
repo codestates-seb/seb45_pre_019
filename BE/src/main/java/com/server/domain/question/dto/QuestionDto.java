@@ -54,12 +54,14 @@ public class QuestionDto {
 		private Long questionId;
 		private String questionTitle;
 		private String questionContent;
+		private int views;
 		private QuestionAccountResDto account;
 
 		public Response(Question question) {
 			this.questionId = question.getQuestionId();
 			this.questionTitle = question.getQuestionTitle();
 			this.questionContent = question.getQuestionContent();
+			this.views = question.getViews();
 			this.account = new QuestionAccountResDto(question.getAccount());
 		}
 	}

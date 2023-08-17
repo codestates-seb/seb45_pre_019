@@ -4,6 +4,7 @@ import com.server.domain.question.dto.QuestionDto;
 import com.server.domain.question.entity.Question;
 import com.server.domain.question.mapper.QuestionMapper;
 import com.server.domain.question.service.QuestionService;
+import com.server.global.argumentsresolver.LoginAccountIdResolver;
 import com.server.global.common.dto.PageDto;
 import com.server.global.common.dto.SingleResDto;
 
@@ -30,9 +31,9 @@ public class QuestionController {
 	private final QuestionMapper mapper;
 
 	@PostMapping("/post") // 질문 등록
-	public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postDto) { // + @LoginAccountId Long accountId
+	public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postDto) {
 
-		postDto.addAccountId(1L);
+		postDto.addAccountId(LoginAccountIdResolver.getAccountId()); // 작성자 아이디 가져오기
 		Question createQuestion = questionService.createQuestion(mapper.questionPostDtoToQuestion(postDto));
 		URI location = UriComponentsBuilder.newInstance()
 			.build(QNA_QUESTION_DEFAULT_URL, createQuestion.getQuestionId());
@@ -43,7 +44,7 @@ public class QuestionController {
 	@PatchMapping("/update/{question-id}")
 	public ResponseEntity<SingleResDto<String>> patchQuestion(@PathVariable("question-id") Long questionId,
 																@Valid @RequestBody QuestionDto.Patch patchDto) { // + @LoginAccountId Long accountId
-		patchDto.addAccountId(1L);
+		patchDto.addAccountId(LoginAccountIdResolver.getAccountId()); // 수정자 아이디 가져오기
 		patchDto.addQuestionId(questionId);
 		questionService.updateQuestion(mapper.questionPatchDtoToQuestion(patchDto));
 
@@ -60,7 +61,7 @@ public class QuestionController {
 		return new ResponseEntity<>(responseDto, HttpStatus.OK);
 	}
 
-	@GetMapping // 전체 게시글 조회 및 필터 정렬을 위한 sort
+	@GetMapping("/questionList") // 전체 게시글 조회 및 필터 정렬을 위한 sort
 	public ResponseEntity<PageDto<QuestionDto.Response>> getQuestions(@Positive @RequestParam int page, @RequestParam String sort) {
 		Page<Question> getQuestions = questionService.findQuestions(page - 1, sort);
 		Page<QuestionDto.Response> questionList = getQuestions.map(QuestionDto.Response::new);
@@ -69,7 +70,6 @@ public class QuestionController {
 
 		return new ResponseEntity(responsePageDto, HttpStatus.OK);
 	}
-
 
 
 	@GetMapping("/search") // 제목 검색 및 사용자 이름 검색
@@ -84,6 +84,11 @@ public class QuestionController {
 		return new ResponseEntity(pageDto, HttpStatus.OK);
 
 	}
+
+	// @DeleteMapping("/delete/{question-id}")
+	// public ResponseEntity deleteQuestion(@PathVariable("question-id") Long questionId) {
+	// 	return null;
+	// }
 
 
 }
