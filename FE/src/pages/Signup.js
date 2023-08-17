@@ -24,11 +24,15 @@ const Signup = () => {
   const [emailErrorMessage, setEamilErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
+  // 디스플레이 네임, 이메일, 패스워드 유효성 검사
   const isDisplayNameValidCheck = displayName.trim().length > 0;
   const isEmailValidCheck = email.includes("@");
   const isPasswordValidCheck = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(
     password,
   );
+
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [formErrorMessage, setFormErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -48,7 +52,7 @@ const Signup = () => {
     console.log("🚀 SUBMIT");
     e.preventDefault();
 
-    // display name validation check and show error message
+    // 디스플레이 네임 에러 메시지
     if (!isDisplayNameValidCheck) {
       setIsDisplayNameError(true);
 
@@ -59,7 +63,7 @@ const Signup = () => {
       setIsDisplayNameError(false);
     }
 
-    // email validation check and show error message
+    // 이메일 에러 메시지
     if (!isEmailValidCheck) {
       setIsEmailError(true);
 
@@ -72,31 +76,30 @@ const Signup = () => {
       setIsEmailError(false);
     }
 
-    // password validation check and show error message
+    // 패스워드 에러 메시지
     if (!isPasswordValidCheck) {
       setIsPasswordError(true);
 
       if (password === "") {
         setPasswordErrorMessage("Password cannot be empty.");
+      } else {
+        setPasswordErrorMessage("");
       }
     } else {
       setIsPasswordError(false);
     }
 
-    // setPassword("");
-    // setIsPasswordError(true);
-
-    // validation check 완료시 백엔드에 데이터 전송
-    if (isEmailValidCheck && isPasswordValidCheck) {
-      console.log("🚀 LOGIN");
-
+    // 유효성검사 통과시 백엔드에 데이터 전송
+    if (isDisplayNameValidCheck && isEmailValidCheck && isPasswordValidCheck) {
+      setIsFormValid(true);
+      console.log("🚀 SIGNUP");
       fetchSignup();
     }
   };
 
-  // signup fetch
+  // 회원가입 API 요청
   const fetchSignup = async () => {
-    console.log("🚀 FETCH_LOGIN");
+    console.log("🚀 FETCH_SIGNUP");
 
     try {
       const response = await fetch(
@@ -120,26 +123,22 @@ const Signup = () => {
 
       console.log("response", response);
 
-      // 401 에러시 ex.
-      // if (response.status === 401) {
-      //   setPassword("");
-      //   setIsEmailError(true);
-      //   setEamilErrorMessage("The email is not a valid email address.");
-      //   return;
-      // }
-
-      if (!response.ok) {
-        throw new Error(`${response.status} 에러발생!.!`);
+      // Status CODE:: 404 (가입된 이메일이 이미 있는 경우)
+      if (response.status === 404) {
+        setPassword("");
+        setIsFormValid(false);
+        setFormErrorMessage("An account with this email already exists.");
+        return;
       }
 
-      // const data = await response.json();
-      // console.log(data);
-      // console.log("RESPONSE DATA", data);
+      if (!response.ok) {
+        throw new Error(`CODE:: ${response.status}`);
+      }
 
+      // 회원가입 완료시 알림, 로그인 페이지로 이동
       window.alert("회원가입이 완료되었습니다.");
-      navigate("/");
+      navigate("/login");
     } catch (error) {
-      // console.log("error is", error);
       console.warn("CATCH ERROR IS", error);
     }
   };
@@ -228,7 +227,7 @@ const Signup = () => {
                   {passwordErrorMessage}
                 </Infomation>
               )}
-              <Infomation>
+              <Infomation $invalid={isPasswordError}>
                 Passwords must contain at least eight characters, including at
                 least 1 letter and 1 number.
               </Infomation>
@@ -242,6 +241,11 @@ const Signup = () => {
               <QuestionCircle />
             </FormDiv>
             <Button>Sign up</Button>
+            {!isFormValid && (
+              <Infomation $invalid={!isFormValid}>
+                {formErrorMessage}
+              </Infomation>
+            )}
             <FormBottomText>
               By clicking “Sign up”, you agree to our terms of service and
               acknowledge that you have read and understand our privacy policy
