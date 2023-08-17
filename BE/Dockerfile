@@ -1,4 +1,4 @@
-# 테스트용 주석
+# test 주석
 # (1) base-image
 FROM openjdk:11
 
