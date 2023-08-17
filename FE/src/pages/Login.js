@@ -4,12 +4,16 @@ import { styled } from "styled-components";
 import { ReactComponent as StackoverflowLogo } from "../assets/icons/stackoverflowLogo.svg";
 
 // import { ReactComponent as AlertIcon } from "../assets/icons/alertCircle.svg";
+import { useAuth } from "../context/auth-context";
 import OauthButtonArea from "../components/login,signup/OauthButtonArea";
 import BottomTextArea from "../components/login,signup/BottomTextArea";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 
 const Login = () => {
+  const { onLogin } = useAuth();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,8 +29,6 @@ const Login = () => {
 
   const [isFormValid, setIsFormValid] = useState(false);
   const [formErrorMessage, setFormErrorMessage] = useState("");
-
-  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -115,13 +117,14 @@ const Login = () => {
       const authHeader = response.headers.get("Authorization");
       if (authHeader && authHeader.startsWith("Bearer ")) {
         const token = authHeader.substring(7); // "Bearer " 접두어 제외
-        localStorage.setItem("ACCESS-TOKEN", token);
-      }
 
-      // 토큰 만료 시간 설정 (1h)
-      const expiration = new Date();
-      expiration.setHours(expiration.getHours() + 1);
-      localStorage.setItem("tokenExpiration", expiration);
+        // 토큰 만료 시간 설정 (1h)
+        const expiration = new Date();
+        expiration.setHours(expiration.getHours() + 1);
+
+        // auth-context에서 토큰과 만료시간 저장
+        onLogin(token, expiration);
+      }
 
       // 로그인 완료시 메인 페이지로 이동
       navigate("/");
