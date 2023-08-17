@@ -87,6 +87,23 @@ public class QuestionService {
 		return searchList;
 	}
 
+	public void deleteQuestion(Long questionId, Long accountId) {
+
+		// 등록된 질문인지 확인
+		Question findQuestion = verifiedExistsQuestion(questionId);
+		Long authorId = findQuestion.getAccount().getAccountId();
+
+		// 로그인 한 회원이 작성자이면
+		if(accountId == authorId) {
+			questionRepository.delete(findQuestion);
+		} else {
+			throw new BusinessLogicException(ExceptionCode.NON_ACCESS_DELETE);
+		}
+
+	}
+
+
+
 	public Question verifiedExistsQuestion(Long questionId) { // 동록된 질문이 맞는지 검증
 		return questionRepository.findById(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_QUESTION));
 	}
@@ -96,5 +113,4 @@ public class QuestionService {
 			throw  new BusinessLogicException(ExceptionCode.NON_ACCESS_MODIFY);
 		}
 	}
-
 }

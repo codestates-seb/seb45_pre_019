@@ -12,7 +12,8 @@ public enum ExceptionCode {
 	ILLEGAL_VOTE(400, "잘못된 투표 요청입니다."),
 	DUPLICATED_SELECT(400, "이미 채택된 답변이 있습니다"),
 	ACCESS_TOKEN_EXPIRATION(400, "로그인이 필요한 기능입니다."),
-	LOGIN_FAILURE(401, "이메일, 비밀번호가 틀렸습니다.");
+	LOGIN_FAILURE(401, "이메일, 비밀번호가 틀렸습니다."),
+	NON_ACCESS_DELETE(400, "삭제 권한이 없습니다.");
 
 	@Getter
 	private int status;
