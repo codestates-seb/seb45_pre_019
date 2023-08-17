@@ -31,7 +31,7 @@ public class AccountController {
 	@GetMapping("/test")
 	public String test() {
 		System.out.println(LoginAccountIdResolver.getAccountId());
-		return "Login Test!";
+		return "Login Test!!";
 	}
 	@PostMapping("/signup")
 	public ResponseEntity<HttpStatus> signUp(@Valid @RequestBody AccountDto.SignUp signUp) {

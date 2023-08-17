@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { ReactComponent as StackoverflowLogo } from "../assets/icons/stackoverflowLogo.svg";
 
 // import { ReactComponent as AlertIcon } from "../assets/icons/alertCircle.svg";
-import OauthButtonArea from "../components/membership/OauthButtonArea";
-import BottomTextArea from "../components/membership/BottomTextArea";
+import OauthButtonArea from "../components/login,signup/OauthButtonArea";
+import BottomTextArea from "../components/login,signup/BottomTextArea";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 
@@ -19,19 +19,14 @@ const Login = () => {
   const [emailErrorMessage, setEamilErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
+  // 이메일, 패스워드 유효성 검사
   const isEmailValidCheck = email.includes("@");
-  const isPasswordValidCheck = password.length > 0; // 일단 1글자 이상이면 백엔드에 요청은 보내는걸로.
-  // const isPasswordValidCheck = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(
-  //   password,
-  // ); // 회원가입시 validation
+  const isPasswordValidCheck = password.length > 0;
+
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [formErrorMessage, setFormErrorMessage] = useState("");
 
   const navigate = useNavigate();
-
-  // let formIsValid = false;
-
-  // if (isEmailValid && isPasswordValid) {
-  //   formIsValid = true;
-  // }
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -45,7 +40,7 @@ const Login = () => {
     console.log("🚀 SUBMIT");
     e.preventDefault();
 
-    // email validation check and show error message
+    // 이메일 에러 메시지
     if (!isEmailValidCheck) {
       setIsEmailError(true);
 
@@ -58,7 +53,7 @@ const Login = () => {
       setIsEmailError(false);
     }
 
-    // password validation check and show error message
+    // 패스워드 에러 메시지
     if (!isPasswordValidCheck) {
       setIsPasswordError(true);
 
@@ -69,58 +64,68 @@ const Login = () => {
       setIsPasswordError(false);
     }
 
-    // setPassword("");
-    // setIsPasswordError(true);
+    console.log(isFormValid);
 
-    // validation check 완료시 백엔드에 데이터 전송
+    // 유효성검사 통과시 백엔드에 데이터 전송
     if (isEmailValidCheck && isPasswordValidCheck) {
+      setIsFormValid(true);
       console.log("🚀 LOGIN");
-
       fetchLogin();
     }
   };
 
-  // 로그인 fetch
+  // 로그인 API 요청
   const fetchLogin = async () => {
     console.log("🚀 FETCH_LOGIN");
-
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/account/login`,
+        `${process.env.REACT_APP_API_URL}:8080/account/login`,
         // "http://localhost:8080/login",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({
+            accountEmail: email,
+            accountPassword: password,
+            // email,
+            // password,
+          }),
         },
       );
 
       console.log("response", response);
 
-      // 401 에러시 ex. 아이디 정보가 없는 경우
+      // Status CODE:: 401 (비밀번호 또는 아이디가 틀렸을 경우)
       if (response.status === 401) {
+        setIsFormValid(false);
+
         setPassword("");
         setIsEmailError(true);
-        setEamilErrorMessage("The email is not a valid email address.");
+        setFormErrorMessage("Please check your email or password");
         return;
       }
 
       if (!response.ok) {
-        throw new Error(`${response.status} 에러발생!.!`);
+        throw new Error(`CODE:: ${response.status}`);
       }
 
-      const data = await response.json();
-      const token = data.token; // 만약 토큰을 받아온다면??????
-      console.log(data);
-      console.log(token);
+      // 토큰 추출
+      const authHeader = response.headers.get("Authorization");
+      if (authHeader && authHeader.startsWith("Bearer ")) {
+        const token = authHeader.substring(7); // "Bearer " 접두어 제외
+        localStorage.setItem("ACCESS-TOKEN", token);
+      }
 
-      // localStorage.setItem("preProjectToken", token); // 토큰 저장
+      // 토큰 만료 시간 설정 (1h)
+      const expiration = new Date();
+      expiration.setHours(expiration.getHours() + 1);
+      localStorage.setItem("tokenExpiration", expiration);
 
+      // 로그인 완료시 메인 페이지로 이동
       navigate("/");
     } catch (error) {
-      // console.log("error is", error);
       console.warn("CATCH ERROR IS", error);
     }
   };
@@ -150,7 +155,9 @@ const Login = () => {
           <FormDiv>
             <FlexArea>
               <Label htmlFor="password">Password</Label>
-              <InfoTextLink>Forgot password?</InfoTextLink>
+              <InfoTextLink to="/account-recovery">
+                Forgot password?
+              </InfoTextLink>
             </FlexArea>
             <Input
               id="password"
@@ -166,6 +173,9 @@ const Login = () => {
             )}
           </FormDiv>
           <Button>Log in</Button>
+          {!isFormValid && (
+            <Infomation $invalid={!isFormValid}>{formErrorMessage}</Infomation>
+          )}
         </form>
       </Card>
       <BottomTextArea title="Sign up" link="/signup">
@@ -203,7 +213,7 @@ const Label = styled.label`
   font-weight: 600;
 `;
 
-const InfoTextLink = styled.span`
+const InfoTextLink = styled(Link)`
   color: #0074cc;
   font-size: 12px;
 
