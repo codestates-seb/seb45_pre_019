@@ -45,6 +45,37 @@ public class Question extends TimeStamp {
 	}
 
 
+	public Question(String questionTitle, String questionContent, int views, int voteCount) {
+		this.questionTitle = questionTitle;
+		this.questionContent = questionContent;
+		this.views = views;
+		this.voteCount = voteCount;
+	}
+
+
+
+	// vote를 처음 등록하는 메서드
+	public void addVoteCount(Vote vote) {
+		this.votes.add(vote); // 투표 정보 추가
+		vote.setQuestion(this); // Question에 투표 정보 업데이트
+
+		calculateVoteCount(); // 총 투표 개수 계산
+	}
+
+
+	public void calculateVoteCount() {
+		this.voteCount = votes.stream().mapToInt(vote -> {
+						if(vote.getStatus() == Vote.voteStatus.GOOD) {
+							return 1;
+						} else if (vote.getStatus() == Vote.voteStatus.BAD) {
+							return -1;
+						} else {
+							return 0;
+						}
+					}).sum();
+	}
+
+
 
 	//    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
 	//    private List<Answer> answers;

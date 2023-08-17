@@ -1,6 +1,8 @@
 package com.server.domain.vote.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,12 +28,15 @@ public class Vote extends TimeStamp {
 	private Long voteId;
 
 	@ManyToOne
-	@JoinColumn(name = "QUESTION_ID")
+	@JoinColumn(name = "question_id")
 	private Question question;
 
-	// @OneToOne
-	// @JoinColumn(name = "ACCOUNT_ID")
-	// private Account account;
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
+
+	@Enumerated(EnumType.STRING)
+	private voteStatus status;
 
 	public enum voteStatus {
 		GOOD("추천"),
@@ -44,6 +49,5 @@ public class Vote extends TimeStamp {
 			this.status = status;
 		}
 	}
-
 
 }

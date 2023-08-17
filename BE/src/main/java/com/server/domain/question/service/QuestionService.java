@@ -26,8 +26,7 @@ public class QuestionService {
 
 	public Question createQuestion(Question question) {
 		// 등록된 회원인지 확인
-		 Long loginAccountId = question.getAccount().getAccountId();
-		 accountService.findAccount(loginAccountId);
+		 accountService.findAccount(question.getAccount().getAccountId());
 
 		return questionRepository.save(question);
 	}
@@ -88,7 +87,7 @@ public class QuestionService {
 		return searchList;
 	}
 
-	private Question verifiedExistsQuestion(Long questionId) { // 동록된 질문이 맞는지 검증
+	public Question verifiedExistsQuestion(Long questionId) { // 동록된 질문이 맞는지 검증
 		return questionRepository.findById(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_QUESTION));
 	}
 
