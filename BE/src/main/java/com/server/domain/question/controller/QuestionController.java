@@ -43,7 +43,7 @@ public class QuestionController {
 
 	@PatchMapping("/update/{question-id}")
 	public ResponseEntity<SingleResDto<String>> patchQuestion(@PathVariable("question-id") Long questionId,
-																@Valid @RequestBody QuestionDto.Patch patchDto) { // + @LoginAccountId Long accountId
+																@Valid @RequestBody QuestionDto.Patch patchDto) {
 		patchDto.addAccountId(LoginAccountIdResolver.getAccountId()); // 수정자 아이디 가져오기
 		patchDto.addQuestionId(questionId);
 		questionService.updateQuestion(mapper.questionPatchDtoToQuestion(patchDto));

@@ -32,12 +32,12 @@ public class VoteService {
 			// 등록된 질문인지 확인
 			Question question = questionService.verifiedExistsQuestion(vote.getQuestion().getQuestionId());
 
-			if(status.equals("good")) {
+			if(status.equals("good")) { // 추천을 누르면
 				vote.setStatus(Vote.voteStatus.GOOD);
-			} else if (status.equals("bad")) {
+			} else if (status.equals("bad")) { // 비추천을 누르면
 				vote.setStatus(Vote.voteStatus.BAD);
 			}
-			question.addVoteCount(vote);
+			question.addVoteCount(vote); // 총 추천수
 
 			return voteRepository.save(vote);
 
@@ -69,7 +69,9 @@ public class VoteService {
 
 	}
 
-	private boolean isVoteExists(Long accountId, Long questionId) {
+	private boolean isVoteExists(Long accountId, Long questionId) { // 사용자가 해당 질문에 추천을 눌렀는지 안 눌렀는지 확인
+
+		// accountId와 questionId에 해당하는 vote count
 		int count = voteRepository.countByAccountIdAndQuestionId(accountId, questionId);
 		return count > 0; // true : 존재, 0 보다 작으면 false : 처음
 	}
