@@ -49,7 +49,6 @@ const Signup = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log("🚀 SUBMIT");
     e.preventDefault();
 
     // 디스플레이 네임 에러 메시지
@@ -92,15 +91,12 @@ const Signup = () => {
     // 유효성검사 통과시 백엔드에 데이터 전송
     if (isDisplayNameValidCheck && isEmailValidCheck && isPasswordValidCheck) {
       setIsFormValid(true);
-      console.log("🚀 SIGNUP");
       fetchSignup();
     }
   };
 
   // 회원가입 API 요청
   const fetchSignup = async () => {
-    console.log("🚀 FETCH_SIGNUP");
-
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}:8080/account/signup`,

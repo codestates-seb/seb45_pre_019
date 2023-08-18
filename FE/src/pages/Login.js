@@ -39,7 +39,6 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log("🚀 SUBMIT");
     e.preventDefault();
 
     // 이메일 에러 메시지
@@ -66,19 +65,15 @@ const Login = () => {
       setIsPasswordError(false);
     }
 
-    console.log(isFormValid);
-
     // 유효성검사 통과시 백엔드에 데이터 전송
     if (isEmailValidCheck && isPasswordValidCheck) {
       setIsFormValid(true);
-      console.log("🚀 LOGIN");
       fetchLogin();
     }
   };
 
   // 로그인 API 요청
   const fetchLogin = async () => {
-    console.log("🚀 FETCH_LOGIN");
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}:8080/account/login`,
@@ -97,7 +92,7 @@ const Login = () => {
         },
       );
 
-      console.log("response", response);
+      console.log("LOGIN RESPONSE", response);
 
       // Status CODE:: 401 (비밀번호 또는 아이디가 틀렸을 경우)
       if (response.status === 401) {
