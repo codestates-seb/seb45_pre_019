@@ -1,6 +1,8 @@
 import react from "react"; // eslint-disable-line no-unused-vars
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+import { useAuth } from "../context/auth-context";
 import menu from "../assets/icons/menu.png";
 import logo from "../assets/images/logo.png";
 import search from "../assets/icons/search.png";
@@ -104,8 +106,12 @@ const SignupButton = styled.button`
   cursor: pointer; /* sign up 버튼 파란색 배경에 흰색 글씨 */
 `;
 
+const LogoutButton = styled(LoginButton)``;
+
 function Header() {
+  const { token, onLogout } = useAuth();
   const navigate = useNavigate();
+
   return (
     <HeaderContainer>
       <MenuIconContainer>
@@ -120,8 +126,15 @@ function Header() {
         <SearchText>search...</SearchText>
       </SearchContainer>
       <AuthButtons>
-        <LoginButton onClick={() => navigate("/login")}>Log In</LoginButton>
-        <SignupButton onClick={() => navigate("/signup")}>Sign Up</SignupButton>
+        {!token && (
+          <>
+            <LoginButton onClick={() => navigate("/login")}>Log In</LoginButton>
+            <SignupButton onClick={() => navigate("/signup")}>
+              Sign Up
+            </SignupButton>
+          </>
+        )}
+        {token && <LogoutButton onClick={onLogout}>Logout</LogoutButton>}
       </AuthButtons>
     </HeaderContainer>
   );

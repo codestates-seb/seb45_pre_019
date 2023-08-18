@@ -4,12 +4,16 @@ import { styled } from "styled-components";
 import { ReactComponent as StackoverflowLogo } from "../assets/icons/stackoverflowLogo.svg";
 
 // import { ReactComponent as AlertIcon } from "../assets/icons/alertCircle.svg";
+import { useAuth } from "../context/auth-context";
 import OauthButtonArea from "../components/login,signup/OauthButtonArea";
 import BottomTextArea from "../components/login,signup/BottomTextArea";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 
 const Login = () => {
+  const { onLogin } = useAuth();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,8 +30,6 @@ const Login = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [formErrorMessage, setFormErrorMessage] = useState("");
 
-  const navigate = useNavigate();
-
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -37,7 +39,6 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log("🚀 SUBMIT");
     e.preventDefault();
 
     // 이메일 에러 메시지
@@ -64,19 +65,15 @@ const Login = () => {
       setIsPasswordError(false);
     }
 
-    console.log(isFormValid);
-
     // 유효성검사 통과시 백엔드에 데이터 전송
     if (isEmailValidCheck && isPasswordValidCheck) {
       setIsFormValid(true);
-      console.log("🚀 LOGIN");
       fetchLogin();
     }
   };
 
   // 로그인 API 요청
   const fetchLogin = async () => {
-    console.log("🚀 FETCH_LOGIN");
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}:8080/account/login`,
@@ -95,7 +92,7 @@ const Login = () => {
         },
       );
 
-      console.log("response", response);
+      console.log("LOGIN RESPONSE", response);
 
       // Status CODE:: 401 (비밀번호 또는 아이디가 틀렸을 경우)
       if (response.status === 401) {
@@ -115,13 +112,14 @@ const Login = () => {
       const authHeader = response.headers.get("Authorization");
       if (authHeader && authHeader.startsWith("Bearer ")) {
         const token = authHeader.substring(7); // "Bearer " 접두어 제외
-        localStorage.setItem("ACCESS-TOKEN", token);
-      }
 
-      // 토큰 만료 시간 설정 (1h)
-      const expiration = new Date();
-      expiration.setHours(expiration.getHours() + 1);
-      localStorage.setItem("tokenExpiration", expiration);
+        // 토큰 만료 시간 설정 (1h)
+        const expiration = new Date();
+        expiration.setHours(expiration.getHours() + 1);
+
+        // auth-context에서 토큰과 만료시간 저장
+        onLogin(token, expiration);
+      }
 
       // 로그인 완료시 메인 페이지로 이동
       navigate("/");

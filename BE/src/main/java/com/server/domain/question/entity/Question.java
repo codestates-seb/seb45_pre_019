@@ -26,8 +26,11 @@ public class Question extends TimeStamp {
 	@Column(nullable = false, name = "question_title")
 	private String questionTitle;
 
-	@Column(columnDefinition = "TEXT", nullable = false, name = "question_content")
-	private String questionContent;
+	@Column(columnDefinition = "TEXT", nullable = false, name = "question_problem")
+	private String questionProblem;
+
+	@Column(columnDefinition = "TEXT", nullable = false, name = "question_expect")
+	private String questionExpect;
 
 	private int views; // 조회수
 
@@ -45,9 +48,10 @@ public class Question extends TimeStamp {
 	}
 
 
-	public Question(String questionTitle, String questionContent, int views, int voteCount) {
+	public Question(String questionTitle, String questionProblem, String questionExpect, int views, int voteCount) {
 		this.questionTitle = questionTitle;
-		this.questionContent = questionContent;
+		this.questionProblem = questionProblem;
+		this.questionExpect = questionExpect;
 		this.views = views;
 		this.voteCount = voteCount;
 	}
