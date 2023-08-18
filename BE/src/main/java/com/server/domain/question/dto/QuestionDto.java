@@ -18,7 +18,10 @@ public class QuestionDto {
 		private String questionTitle;
 
 		@NotBlank
-		private String questionContent;
+		private String questionProblem;
+
+		@NotBlank
+		private String questionExpect;
 
 		private Long accountId;
 
@@ -36,7 +39,10 @@ public class QuestionDto {
 		private String questionTitle;
 
 		@NotBlank
-		private String questionContent;
+		private String questionProblem;
+
+		@NotBlank
+		private String questionExpect;
 
 		public void addQuestionId(long questionId) {
 			this.questionId = questionId;
@@ -53,15 +59,19 @@ public class QuestionDto {
 	public static class Response {
 		private Long questionId;
 		private String questionTitle;
-		private String questionContent;
+		private String questionProblem;
+		private String questionExpect;
 		private int views;
+		private int voteCount;
 		private QuestionAccountResDto account;
 
 		public Response(Question question) {
 			this.questionId = question.getQuestionId();
 			this.questionTitle = question.getQuestionTitle();
-			this.questionContent = question.getQuestionContent();
+			this.questionProblem = question.getQuestionProblem();
+			this.questionExpect = question.getQuestionExpect();
 			this.views = question.getViews();
+			this.voteCount = question.getVoteCount();
 			this.account = new QuestionAccountResDto(question.getAccount());
 		}
 	}

@@ -44,7 +44,8 @@ public class QuestionService {
 		verifyAccess(findQuestion, loginAccountId);
 
 		Optional.ofNullable(question.getQuestionTitle()).ifPresent(title -> findQuestion.setQuestionTitle(title));
-		Optional.ofNullable(question.getQuestionContent()).ifPresent(content -> findQuestion.setQuestionContent(content));
+		Optional.ofNullable(question.getQuestionProblem()).ifPresent(problem -> findQuestion.setQuestionProblem(problem));
+		Optional.ofNullable(question.getQuestionExpect()).ifPresent(expect -> findQuestion.setQuestionExpect(expect));
 
 		 return questionRepository.save(findQuestion);
 
@@ -63,14 +64,14 @@ public class QuestionService {
 		if(sort.equals("new")) {
 			return questionRepository.findAll(PageRequest.of(page, 5, Sort.by("questionId").descending()));
 
-			// 받아온 정렬 기준이 조회수 순이면
-		// } else if(sort.equals("views")) {
-		// 	return questionRepository.findAll(PageRequest.of(page, 5, Sort.by("views").descending()));
-		//
-		// 	// 받아온 정렬 기준이 투표 순이면
-		// } else if(sort.equals("votes")){
-		//
-		// 		return questionRepository.findAll(PageRequest.of(page,5, Sort.by("voteScore").descending()));
+		//받아온 정렬 기준이 조회수 순이면
+		} else if(sort.equals("views")) {
+			return questionRepository.findAll(PageRequest.of(page, 5, Sort.by("views").descending()));
+
+		// 받아온 정렬 기준이 투표 순이면
+		} else if(sort.equals("votes")){
+
+				return questionRepository.findAll(PageRequest.of(page,5, Sort.by("voteCount").descending()));
 
 		} else {
 
@@ -99,9 +100,7 @@ public class QuestionService {
 		} else {
 			throw new BusinessLogicException(ExceptionCode.NON_ACCESS_DELETE);
 		}
-
 	}
-
 
 
 	public Question verifiedExistsQuestion(Long questionId) { // 동록된 질문이 맞는지 검증
