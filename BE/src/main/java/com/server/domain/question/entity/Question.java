@@ -38,6 +38,10 @@ public class Question extends TimeStamp {
 
 	private int voteCount; // 투표수
 
+	@ElementCollection(fetch = FetchType.LAZY)
+	private List<String> tags = new ArrayList<>();
+
+
 	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
@@ -50,6 +54,7 @@ public class Question extends TimeStamp {
 
 	@OneToMany(mappedBy = "question")
 	private List<QuestionReply> questionReplies = new ArrayList<>();
+
 	public void addViews(int view) {
 		this.views = view + 1;
 	}
