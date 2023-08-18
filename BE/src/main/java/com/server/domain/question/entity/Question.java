@@ -1,6 +1,7 @@
 package com.server.domain.question.entity;
 
 import com.server.domain.account.entity.Account;
+import com.server.domain.answer.entity.Answer;
 import com.server.domain.vote.entity.Vote;
 import com.server.global.auditing.TimeStamp;
 
@@ -42,6 +43,9 @@ public class Question extends TimeStamp {
 
 	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // 투표 정보 관리
 	private List<Vote> votes = new ArrayList<>();
+
+	@OneToMany(mappedBy = "question")
+	private List<Answer> answers = new ArrayList<>();
 
 	public void addViews(int view) {
 		this.views = view + 1;
