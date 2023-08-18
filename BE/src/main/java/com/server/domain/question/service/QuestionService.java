@@ -46,6 +46,7 @@ public class QuestionService {
 		Optional.ofNullable(question.getQuestionTitle()).ifPresent(title -> findQuestion.setQuestionTitle(title));
 		Optional.ofNullable(question.getQuestionProblem()).ifPresent(problem -> findQuestion.setQuestionProblem(problem));
 		Optional.ofNullable(question.getQuestionExpect()).ifPresent(expect -> findQuestion.setQuestionExpect(expect));
+		Optional.ofNullable(question.getTags()).ifPresent(tags -> findQuestion.setTags(tags));
 
 		 return questionRepository.save(findQuestion);
 

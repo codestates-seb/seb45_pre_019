@@ -1,10 +1,13 @@
 package com.server.domain.question.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.server.domain.account.dto.AccountDto;
 import com.server.domain.account.entity.Account;
@@ -25,6 +28,9 @@ public class QuestionDto {
 
 		private Long accountId;
 
+		@Size(max=10, message = "태그는 최대 10개까지 가능합니다.")
+		private List<String> tags;
+
 		public void addAccountId(long accountId) {
 			this.accountId = accountId;
 		}
@@ -44,6 +50,9 @@ public class QuestionDto {
 		@NotBlank
 		private String questionExpect;
 
+		@Size(max=10, message = "태그는 최대 10개까지 가능합니다.")
+		private List<String> tags;
+
 		public void addQuestionId(long questionId) {
 			this.questionId = questionId;
 		}
@@ -51,8 +60,8 @@ public class QuestionDto {
 			this.accountId = accountId;
 		}
 
-
 	}
+
 	@Getter
 	@AllArgsConstructor
 	@NoArgsConstructor
@@ -63,6 +72,7 @@ public class QuestionDto {
 		private String questionExpect;
 		private int views;
 		private int voteCount;
+		private List<String> tags;
 		private QuestionAccountResDto account;
 
 		public Response(Question question) {
@@ -72,6 +82,7 @@ public class QuestionDto {
 			this.questionExpect = question.getQuestionExpect();
 			this.views = question.getViews();
 			this.voteCount = question.getVoteCount();
+			this.tags = question.getTags();
 			this.account = new QuestionAccountResDto(question.getAccount());
 		}
 	}
