@@ -11,7 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.server.domain.account.entity.Account;
+import com.server.domain.answer.entity.Answer;
 import com.server.domain.question.entity.Question;
+import com.server.domain.reply.entity.AnswerReply;
+import com.server.domain.reply.entity.QuestionReply;
 import com.server.global.auditing.TimeStamp;
 
 import lombok.Getter;
@@ -37,6 +40,18 @@ public class Vote extends TimeStamp {
 
 	@Enumerated(EnumType.STRING)
 	private voteStatus status;
+
+	@ManyToOne
+	@JoinColumn(name = "answer_id")
+	private Answer answer;
+
+	@ManyToOne
+	@JoinColumn(name = "answer_reply_id")
+	private AnswerReply answerReply;
+
+	@ManyToOne
+	@JoinColumn(name = "question_reply_id")
+	private QuestionReply questionReply;
 
 	public enum voteStatus {
 		GOOD("추천"),

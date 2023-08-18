@@ -13,7 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.server.domain.answer.entity.Answer;
 import com.server.domain.question.entity.Question;
+import com.server.domain.reply.entity.AnswerReply;
+import com.server.domain.reply.entity.QuestionReply;
 import com.server.domain.vote.entity.Vote;
 import com.server.global.auditing.TimeStamp;
 
@@ -47,12 +50,25 @@ public class Account extends TimeStamp {
 	@Builder.Default
 	private List<Question> questions = new ArrayList<>();
 
+	@OneToMany(mappedBy = "account")
+	@Builder.Default
+	private List<Answer> answers = new ArrayList<>();
+
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Builder.Default
 	private List<Authority> roles = new ArrayList<>();
 
 	@OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE)
+	@Builder.Default
 	private List<Vote> votes = new ArrayList<>();
+
+	@OneToMany(mappedBy = "account")
+	@Builder.Default
+	private List<QuestionReply> questionReplies = new ArrayList<>();
+
+	@OneToMany(mappedBy = "account")
+	@Builder.Default
+	private List<AnswerReply> answerReplies = new ArrayList<>();
 
 	public void setRoles(List<Authority> role) {
 		this.roles = role;
