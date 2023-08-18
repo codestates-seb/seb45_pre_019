@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 
 import com.server.domain.account.entity.Account;
 import com.server.domain.question.entity.Question;
+import com.server.domain.reply.entity.AnswerReply;
 import com.server.domain.vote.entity.Vote;
 import com.server.global.auditing.TimeStamp;
 
@@ -50,4 +51,8 @@ public class Answer extends TimeStamp {
 	@OneToMany(mappedBy = "answer")
 	@Builder.Default
 	private List<Vote> votes = new ArrayList<>();
+
+	@OneToMany(mappedBy = "answer")
+	@Builder.Default
+	private List<AnswerReply> answerReplies = new ArrayList<>();
 }
