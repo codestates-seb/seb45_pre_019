@@ -5,7 +5,7 @@ import { ReactComponent as LogoIcon } from "../assets/icons/logo.svg";
 const FooterContainer = styled.footer`
   background-color: #232629;
   color: #babfc3;
-  margin-top: 24px;
+  /* margin-top: 24px; */
   display: block;
   > .footer {
     box-sizing: border-box;

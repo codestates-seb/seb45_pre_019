@@ -1,59 +1,96 @@
-import react from "react"; // eslint-disable-line no-unused-vars
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 import { useAuth } from "../context/auth-context";
-import menu from "../assets/icons/menu.png";
-import logo from "../assets/images/logo.png";
+import { ReactComponent as StackoverflowLogo } from "../assets/images/logo.svg";
 import search from "../assets/icons/search.png";
 
 const HeaderContainer = styled.header`
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 56px;
   background-color: white;
   border-top: 3px solid orange;
   border-bottom: 1px solid #ccc; /* 회색 줄을 추가 */
-  display: flex;
-  align-items: center;
-  padding: 1rem; /* 흰색 줄 */
+  /* padding: 1rem; 흰색 줄 */
+
+  & .header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1264px;
+    height: 100%;
+    margin: 0 auto;
+  }
 `;
 
 const MenuIconContainer = styled.div`
-  width: 40px;
-  height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center; /* 메뉴 아이콘을 가운데로 정렬 */
-  margin-right: 1rem;
-  background-color: transparent; /* 초기 상태는 투명한 배경 */
-  border-radius: 0;
-  transition: background-color 0.3s ease; /* 배경색 변경 시 애니메이션 */
+  justify-content: center;
+  width: 52px;
+  height: 100%;
+  cursor: pointer;
+
   &:hover {
-    background-color: #f1f1f1; /* 마우스 오버 시 배경색 변경 */
+    background-color: #e3e6e8;
+  }
+
+  // menuIcon animation
+  & .menuIcon {
+    position: relative;
+    width: 16px;
+    height: 12px;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      color: #333;
+      background-color: #525960;
+      transition: all 0.2s ease-in-out;
+    }
+    &::before {
+      top: 0;
+      transform: rotate(0);
+    }
+    &::after {
+      bottom: 0;
+      box-shadow: 0 -5px #525960;
+    }
+
+    &.on {
+      &::before {
+        top: 6px;
+        transform: rotate(45deg);
+      }
+      &::after {
+        box-shadow: 0 0 transparent;
+        bottom: 4px;
+        transform: rotate(-45deg);
+      }
+    }
   }
 `;
 
-const MenuIconImg = styled.img`
-  width: 30px;
-  height: auto;
-  margin-right: 1rem; /* 메뉴 아이콘 */
-`;
-
-const LogoAndTextContainer = styled.div`
+const StyledLink = styled(Link)`
   display: flex;
+  justify-content: center;
   align-items: center;
+  width: 166px;
+  height: 100%;
+  padding: 0 8px;
   margin-right: 1rem; /* 로고 컨테이너 */
   transition: filter 0.3s ease; /* 마우스 오버 시 필터 애니메이션 적용 */
+
   &:hover {
     background-color: #f1f1f1; /* 마우스 오버 시 배경색 변경 */
   }
-`;
-
-const LogoImg = styled.img`
-  width: 180px;
-  height: auto; /*로고 아이콘 */
-`;
-
-const StackOverflowText = styled.span`
-  font-weight: bold; /* 스택 오버 플로우 텍스트 */
 `;
 
 const SearchContainer = styled.div`
@@ -79,63 +116,68 @@ const SearchText = styled.span`
 const AuthButtons = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 1rem; /*버튼 */
+  padding: 0 16px;
 `;
 
 const LoginButton = styled.button`
-  background-color: #f1f1f1; /* 밝은 회색 배경색 */
-  color: #007bff; /* 파란색 글자색 */
-  border: 5px;
-  padding: 5px 10px;
+  border: none;
+  background-color: var(--color-sub-lightblue);
+  color: #39739d; /* 파란색 글자색 */
+  padding: 8px 10px;
   margin-right: 5px;
   &:hover {
-    background-color: #ddd;
-    color: #0056b3; /* 더 진한 파란색으로 변경 */
+    background-color: #b3d3ea;
+    color: #2c5877; /* 더 진한 파란색으로 변경 */
   }
   cursor: pointer;
 `;
 
 const SignupButton = styled.button`
-  background-color: #007bff;
-  color: white;
-  border: 5px;
-  padding: 5px 10px;
+  border: none;
+  background-color: var(--color-sub-blue);
+  color: var(--color-white);
+  padding: 8px 10px;
   &:hover {
-    background-color: #333;
+    background-color: #0074cc;
   }
   cursor: pointer; /* sign up 버튼 파란색 배경에 흰색 글씨 */
 `;
 
 const LogoutButton = styled(LoginButton)``;
 
-function Header() {
+function Header({ sidebarStatus, menuIconVisible, onToggle }) {
   const { token, onLogout } = useAuth();
   const navigate = useNavigate();
 
   return (
     <HeaderContainer>
-      <MenuIconContainer>
-        <MenuIconImg src={menu} alt="menu.png" />
-      </MenuIconContainer>
-      <LogoAndTextContainer>
-        <LogoImg src={logo} alt="logo.png" />
-        <StackOverflowText></StackOverflowText>
-      </LogoAndTextContainer>
-      <SearchContainer>
-        <SearchIcon src={search} alt="search.png" />
-        <SearchText>search...</SearchText>
-      </SearchContainer>
-      <AuthButtons>
-        {!token && (
-          <>
-            <LoginButton onClick={() => navigate("/login")}>Log In</LoginButton>
-            <SignupButton onClick={() => navigate("/signup")}>
-              Sign Up
-            </SignupButton>
-          </>
+      <div className="header">
+        {menuIconVisible && (
+          <MenuIconContainer onClick={() => onToggle()}>
+            <span className={sidebarStatus ? "menuIcon on" : "menuIcon"}></span>
+          </MenuIconContainer>
         )}
-        {token && <LogoutButton onClick={onLogout}>Logout</LogoutButton>}
-      </AuthButtons>
+        <StyledLink to="/">
+          <StackoverflowLogo />
+        </StyledLink>
+        <SearchContainer>
+          <SearchIcon src={search} alt="search.png" />
+          <SearchText>search...</SearchText>
+        </SearchContainer>
+        <AuthButtons>
+          {!token && (
+            <>
+              <LoginButton onClick={() => navigate("/users/login")}>
+                Log In
+              </LoginButton>
+              <SignupButton onClick={() => navigate("/users/signup")}>
+                Sign Up
+              </SignupButton>
+            </>
+          )}
+          {token && <LogoutButton onClick={onLogout}>Logout</LogoutButton>}
+        </AuthButtons>
+      </div>
     </HeaderContainer>
   );
 }
