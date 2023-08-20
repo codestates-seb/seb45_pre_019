@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { styled } from "styled-components";
 
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -50,18 +51,45 @@ const RootLayout = () => {
         menuIconVisible={isMenuIconVisible}
         onToggle={handleToggleSidebar}
       />
-      <div className="container">
+      <Container
+        className={
+          (currentPath === "/users/login" || currentPath === "/users/signup") &&
+          "full-container"
+        }
+      >
         <Sidebar
           menuIconVisible={isMenuIconVisible}
           sidebarStatus={isSidebarOpen}
         />
-        <div className="content">
+        <Content className="content">
           <Outlet />
-        </div>
-      </div>
+        </Content>
+      </Container>
       {isFooterVisible && <Footer />}
     </>
   );
 };
+
+// Layout CSS
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 56px - 302px);
+  max-width: 1264px;
+  margin: 56px auto 0;
+
+  &.full-container {
+    min-height: calc(100vh - 56px);
+    align-items: center;
+  }
+`;
+
+const Content = styled.div`
+  width: calc(100% - 164px);
+  max-width: 1100px;
+  padding: 24px;
+`;
 
 export default RootLayout;
