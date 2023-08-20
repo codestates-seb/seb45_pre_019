@@ -45,13 +45,13 @@ public class Question extends TimeStamp {
 	@JoinColumn(name = "account_id")
 	private Account account;
 
-	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // 투표 정보 관리
+	@OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true) // 투표 정보 관리
 	private List<Vote> votes = new ArrayList<>();
 
-	@OneToMany(mappedBy = "question")
+	@OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
 	private List<Answer> answers = new ArrayList<>();
 
-	@OneToMany(mappedBy = "question")
+	@OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
 	private List<Reply> replies = new ArrayList<>();
 
 	public void addViews(int view) {
@@ -67,7 +67,29 @@ public class Question extends TimeStamp {
 		this.voteCount = voteCount;
 	}
 
+	public void setAccount(Account account) {
+		this.account = account;
 
+		if (!this.account.getQuestions().contains(this)) {
+			this.account.setQuestions(this);
+		}
+	}
+
+	public void setAnswers(Answer answer) {
+		answers.add(answer);
+
+		if (answer.getQuestion() != this) {
+			answer.setQuestion(this);
+		}
+	}
+
+	public void setReplies(Reply reply) {
+		replies.add(reply);
+
+		if (reply.getQuestion() != this) {
+			reply.setQuestion(this);
+		}
+	}
 
 	// vote를 처음 등록하는 메서드
 	public void addVoteCount(Vote vote) {
@@ -89,10 +111,4 @@ public class Question extends TimeStamp {
 						}
 					}).sum();
 	}
-
-
-
-	//    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-	//    private List<Answer> answers;
-
 }
