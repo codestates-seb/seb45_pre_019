@@ -1,11 +1,8 @@
 import { createContext, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
-
   const [token, setToken] = useState(
     localStorage.getItem("ACCESS-TOKEN") || "",
   );
@@ -23,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
     // 로그아웃 완료시 메인 페이지로 이동
     window.alert("로그아웃 되었습니다.");
-    navigate("/");
+    // navigate("/");
   };
 
   return (

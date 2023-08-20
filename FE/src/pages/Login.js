@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { ReactComponent as StackoverflowLogo } from "../assets/icons/stackoverflowLogo.svg";
+import { ReactComponent as StackoverflowLogo } from "../assets/icons/logo.svg";
 
 // import { ReactComponent as AlertIcon } from "../assets/icons/alertCircle.svg";
 import { useAuth } from "../context/auth-context";
@@ -176,7 +176,7 @@ const Login = () => {
           )}
         </form>
       </Card>
-      <BottomTextArea title="Sign up" link="/signup">
+      <BottomTextArea title="Sign up" link="/users/signup">
         Don’t have an account?
       </BottomTextArea>
     </Container>

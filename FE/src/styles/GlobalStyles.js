@@ -72,16 +72,19 @@ const GlobalStyles = createGlobalStyle`
 
   /* Layout */
   .container {
+    position: relative;
     display: flex;
     justify-content: center;
     width: 100%;
+    min-height: calc(100vh - 56px - 302px);
     max-width: 1264px;
-    margin: 0 auto;
+    margin: 56px auto 0;
   }
 
   .content {
     width: calc(100% - 164px);
     max-width: 1100px;
+    padding: 24px;
   }
 `;
 
