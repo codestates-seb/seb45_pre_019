@@ -16,5 +16,6 @@ decorator:
 
 jwt:
   key: ${JWT_SECRET_KEY}
+
 server:
   address: 0.0.0.0
