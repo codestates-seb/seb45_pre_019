@@ -133,7 +133,7 @@ const Signup = () => {
 
       // 회원가입 완료시 알림, 로그인 페이지로 이동
       window.alert("회원가입이 완료되었습니다.");
-      navigate("/login");
+      navigate("/users/login");
     } catch (error) {
       console.warn("CATCH ERROR IS", error);
     }
