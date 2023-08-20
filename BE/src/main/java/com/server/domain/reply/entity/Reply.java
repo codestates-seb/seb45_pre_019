@@ -37,7 +37,7 @@ public class Reply extends TimeStamp {
 	@Column(name = "reply_id")
 	private Long replyId;
 
-	@Column(name = "reply_content")
+	@Column(columnDefinition = "TEXT", nullable = false, name = "reply_content")
 	private String replyContent;
 
 	@ManyToOne
@@ -55,4 +55,36 @@ public class Reply extends TimeStamp {
 	@ManyToOne
 	@JoinColumn(name = "answer_id")
 	private Answer answer;
+
+	public void setAccount(Account account) {
+		this.account = account;
+
+		if (!this.account.getReplies().contains(this)) {
+			this.account.setReplies(this);
+		}
+	}
+
+	public void setVotes(Vote vote) {
+		votes.add(vote);
+
+		if (vote.getReply() != this) {
+			vote.setReply(this);
+		}
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+
+		if (!this.question.getReplies().contains(this)) {
+			this.question.setReplies(this);
+		}
+	}
+
+	public void setAnswer(Answer answer) {
+		this.answer = answer;
+
+		if (!this.answer.getReplies().contains(this)) {
+			this.answer.setReplies(this);
+		}
+	}
 }

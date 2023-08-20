@@ -47,6 +47,30 @@ public class Vote extends TimeStamp {
 	@JoinColumn(name = "answer_reply_id")
 	private Reply reply;
 
+	public void setAccount(Account account) {
+		this.account = account;
+
+		if (!this.account.getVotes().contains(this)) {
+			this.account.setVotes(this);
+		}
+	}
+
+	public void setAnswer(Answer answer) {
+		this.answer = answer;
+
+		if (!this.answer.getVotes().contains(this)) {
+			this.answer.setVotes(this);
+		}
+	}
+
+	public void setReply(Reply reply) {
+		this.reply = reply;
+
+		if (!this.reply.getVotes().contains(this)) {
+			this.reply.setVotes(this);
+		}
+	}
+
 	public enum voteStatus {
 		GOOD("추천"),
 		BAD("비추천");
