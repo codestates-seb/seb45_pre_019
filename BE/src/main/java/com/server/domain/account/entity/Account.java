@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 
 import com.server.domain.answer.entity.Answer;
 import com.server.domain.question.entity.Question;
-import com.server.domain.reply.entity.AnswerReply;
 import com.server.domain.reply.entity.Reply;
 import com.server.domain.vote.entity.Vote;
 import com.server.global.auditing.TimeStamp;

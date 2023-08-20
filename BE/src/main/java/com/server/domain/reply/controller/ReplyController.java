@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,14 +31,25 @@ import lombok.RequiredArgsConstructor;
 public class ReplyController {
 	private final ReplyService replyService;
 	private final ReplyMapper replyMapper;
-	private final AccountService accountService;
 	private final QuestionService questionService;
 
 	@PostMapping("/post")
 	public ResponseEntity<HttpStatus> postReply (
-		@RequestParam(value = "sub") String subject, @RequestParam("qna-id") long qnaId, @Valid @RequestBody ReplyDto.Post post
+		@RequestParam(value = "sub") String subject, @RequestParam("id") long id, @Valid @RequestBody ReplyDto.Post post
 	) {
-		Account account = accountService.findAccount(LoginAccountIdResolver.getAccountId());
+		replyService.createReply(replyMapper.postToReply(post), subject, id);
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@PatchMapping("/update/{reply-id}")
+	public ResponseEntity<HttpStatus> patchReply(@PathVariable("reply-id") long id, @RequestBody ReplyDto.Post post) {
+		replyService.updateReply(replyMapper.postToReply(post), id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@DeleteMapping("/delete/{reply-id}")
+	public ResponseEntity<HttpStatus> deleteReply(@PathVariable("reply-id") long id) {
+		replyService.deleteReply(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
