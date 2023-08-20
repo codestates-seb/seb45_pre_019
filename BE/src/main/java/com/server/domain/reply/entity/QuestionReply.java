@@ -35,7 +35,7 @@ public class QuestionReply extends TimeStamp {
 	private Long questionReplyId;
 
 	@Column(name = "question_reply_content")
-	private String questionReplyContent;
+	private String content;
 
 	@ManyToOne
 	@JoinColumn(name = "account_id")

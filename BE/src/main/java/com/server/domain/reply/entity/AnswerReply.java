@@ -36,7 +36,7 @@ public class AnswerReply extends TimeStamp {
 	private Long answerReplyId;
 
 	@Column(name = "answer_reply_content")
-	private String answerReplyContent;
+	private String content;
 
 	@ManyToOne
 	@JoinColumn(name = "account_id")
