@@ -249,7 +249,7 @@ const Signup = () => {
             </FormBottomText>
           </form>
         </Card>
-        <BottomTextArea title="Log in" link="/login">
+        <BottomTextArea title="Log in" link="/users/login">
           Already have an account?
         </BottomTextArea>
       </RightContent>
@@ -262,7 +262,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
 
   > svg {
     margin-bottom: 24px;
