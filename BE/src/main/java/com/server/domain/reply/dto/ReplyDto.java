@@ -8,6 +8,6 @@ public class ReplyDto {
 	@Getter
 	public static class Post {
 		@NotNull
-		private String content;
+		private String replyContent;
 	}
 }

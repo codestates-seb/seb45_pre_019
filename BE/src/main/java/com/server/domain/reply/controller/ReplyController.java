@@ -32,21 +32,11 @@ public class ReplyController {
 	private final AccountService accountService;
 	private final QuestionService questionService;
 
-	@PostMapping("/post/{qna-id}")
-	public ResponseEntity<HttpStatus> postReply(
-		@RequestParam(value = "sub") String subject,
-		@Valid @RequestBody ReplyDto.Post post,
-		@PathVariable("qna-id") long qnaId) {
-
+	@PostMapping("/post")
+	public ResponseEntity<HttpStatus> postReply (
+		@RequestParam(value = "sub") String subject, @RequestParam("qna-id") long qnaId, @Valid @RequestBody ReplyDto.Post post
+	) {
 		Account account = accountService.findAccount(LoginAccountIdResolver.getAccountId());
-		if (subject.equals("question")) {
-			Question question = questionService.findQuestion(qnaId);
-			replyService.createReply(replyMapper.PostToQuestionReply(post, account, question), subject);
-		}
-		else {
-			// Answer answer = answerService.findQuestion(qnaId);
-			// replyService.createReply(replyMapper.PostToAnswerReply(post, account, answer), subject);
-		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 }
