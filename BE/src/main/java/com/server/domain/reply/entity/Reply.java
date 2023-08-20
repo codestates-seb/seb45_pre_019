@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.server.domain.account.entity.Account;
+import com.server.domain.answer.entity.Answer;
 import com.server.domain.question.entity.Question;
 import com.server.domain.vote.entity.Vote;
 import com.server.global.auditing.TimeStamp;
@@ -28,24 +29,28 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestionReply extends TimeStamp {
+public class Reply extends TimeStamp {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "question_reply_id")
-	private Long questionReplyId;
+	@Column(name = "reply_id")
+	private Long replyId;
 
-	@Column(name = "question_reply_content")
-	private String questionReplyContent;
+	@Column(name = "reply_content")
+	private String replyContent;
 
 	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
 
+	@OneToMany(mappedBy = "reply", cascade = CascadeType.REMOVE)
+	@Builder.Default
+	private List<Vote> votes = new ArrayList<>();
+
 	@ManyToOne
 	@JoinColumn(name = "question_id")
 	private Question question;
 
-	@OneToMany(mappedBy = "questionReply", cascade = CascadeType.REMOVE)
-	@Builder.Default
-	private List<Vote> votes = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "answer_id")
+	private Answer answer;
 }

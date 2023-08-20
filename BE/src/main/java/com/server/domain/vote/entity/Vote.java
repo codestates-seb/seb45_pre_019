@@ -8,13 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import com.server.domain.account.entity.Account;
 import com.server.domain.answer.entity.Answer;
 import com.server.domain.question.entity.Question;
-import com.server.domain.reply.entity.AnswerReply;
-import com.server.domain.reply.entity.QuestionReply;
+import com.server.domain.reply.entity.Reply;
 import com.server.global.auditing.TimeStamp;
 
 import lombok.Getter;
@@ -47,11 +45,7 @@ public class Vote extends TimeStamp {
 
 	@ManyToOne
 	@JoinColumn(name = "answer_reply_id")
-	private AnswerReply answerReply;
-
-	@ManyToOne
-	@JoinColumn(name = "question_reply_id")
-	private QuestionReply questionReply;
+	private Reply reply;
 
 	public enum voteStatus {
 		GOOD("추천"),

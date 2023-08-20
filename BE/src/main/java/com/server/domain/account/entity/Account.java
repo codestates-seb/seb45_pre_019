@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ import javax.persistence.OneToMany;
 import com.server.domain.answer.entity.Answer;
 import com.server.domain.question.entity.Question;
 import com.server.domain.reply.entity.AnswerReply;
-import com.server.domain.reply.entity.QuestionReply;
+import com.server.domain.reply.entity.Reply;
 import com.server.domain.vote.entity.Vote;
 import com.server.global.auditing.TimeStamp;
 
@@ -24,7 +23,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Builder
@@ -64,11 +62,7 @@ public class Account extends TimeStamp {
 
 	@OneToMany(mappedBy = "account")
 	@Builder.Default
-	private List<QuestionReply> questionReplies = new ArrayList<>();
-
-	@OneToMany(mappedBy = "account")
-	@Builder.Default
-	private List<AnswerReply> answerReplies = new ArrayList<>();
+	private List<Reply> replies = new ArrayList<>();
 
 	public void setRoles(List<Authority> role) {
 		this.roles = role;

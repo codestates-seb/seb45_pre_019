@@ -2,11 +2,10 @@ package com.server.domain.question.entity;
 
 import com.server.domain.account.entity.Account;
 import com.server.domain.answer.entity.Answer;
-import com.server.domain.reply.entity.QuestionReply;
+import com.server.domain.reply.entity.Reply;
 import com.server.domain.vote.entity.Vote;
 import com.server.global.auditing.TimeStamp;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,7 +52,7 @@ public class Question extends TimeStamp {
 	private List<Answer> answers = new ArrayList<>();
 
 	@OneToMany(mappedBy = "question")
-	private List<QuestionReply> questionReplies = new ArrayList<>();
+	private List<Reply> replies = new ArrayList<>();
 
 	public void addViews(int view) {
 		this.views = view + 1;
