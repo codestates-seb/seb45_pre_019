@@ -61,7 +61,13 @@ const RootLayout = () => {
           menuIconVisible={isMenuIconVisible}
           sidebarStatus={isSidebarOpen}
         />
-        <Content className="content">
+        <Content
+          className={
+            (currentPath === "/users/login" ||
+              currentPath === "/users/signup") &&
+            "full-content"
+          }
+        >
           <Outlet />
         </Content>
       </Container>
@@ -81,8 +87,10 @@ const Container = styled.div`
   margin: 56px auto 0;
 
   &.full-container {
+    max-width: 100%;
     min-height: calc(100vh - 56px);
     align-items: center;
+    background-color: #f1f2f3;
   }
 `;
 
@@ -90,6 +98,10 @@ const Content = styled.div`
   width: calc(100% - 164px);
   max-width: 1100px;
   padding: 24px;
+
+  &.full-content {
+    width: 100%;
+  }
 `;
 
 export default RootLayout;
