@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Questiontitle from "../components/makequestion/Questiontitle";
 import QuestionProblem from "../components/makequestion/QuestionProblem";
@@ -32,6 +33,7 @@ const SubmitButton = styled.button`
 `;
 
 const QuestionPage = () => {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(1);
   const [title, setTitle] = useState("");
   const [problem, setProblem] = useState("");
@@ -64,6 +66,7 @@ const QuestionPage = () => {
       }
 
       console.log("Question submitted successfully:", await response.json());
+      navigate("/questionlist");
     } catch (error) {
       console.error("Error submitting question:", error);
     }
