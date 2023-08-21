@@ -17,9 +17,11 @@ import com.server.domain.vote.mapper.VoteMapper;
 import com.server.domain.vote.service.VoteService;
 import com.server.global.argumentsresolver.LoginAccountIdResolver;
 
+import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping("/questions")
+@Api(tags = {"5. 투표 관리"}, description = "투표 CRUD 관련 서비스")
 public class VoteController {
 
 	private final VoteService voteService;
