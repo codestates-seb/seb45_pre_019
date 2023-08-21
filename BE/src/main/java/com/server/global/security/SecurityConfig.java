@@ -62,7 +62,7 @@ public class SecurityConfig {
 			.antMatchers(
 				"/questions/post", "/questions/update/**", "/questions/delete/**", "/account/test",
 				"/replies/post", "/replies/update/**", "/replies/delete/**",
-				"/questions/{question-id}/**"
+				"/questions/{question-id}/*"
 			).hasRole("USER")
 			.anyRequest().permitAll()
 			.and()
