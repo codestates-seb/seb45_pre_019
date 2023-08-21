@@ -1,5 +1,6 @@
 package com.server.domain.vote.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,8 +11,9 @@ public class VoteDto {
 
 	@Getter
 	public static class Post {
-
+		@ApiModelProperty(value = "회원 번호")
 		private Long accountId;
+		@ApiModelProperty(value = "질문 번호")
 		private Long questionId;
 
 		public void addAccountId(Long accountId) {
@@ -29,10 +31,10 @@ public class VoteDto {
 	@AllArgsConstructor
 	@Builder
 	public static class Response {
-
+		@ApiModelProperty(value = "질문 번호")
 		private long questionId;
-
-		private int voteCount;  // 총 점수
+		@ApiModelProperty(value = "총 좋아요 점수")
+		private int voteCount;
 
 	}
 

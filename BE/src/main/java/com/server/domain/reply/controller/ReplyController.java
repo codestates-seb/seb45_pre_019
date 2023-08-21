@@ -23,11 +23,13 @@ import com.server.domain.reply.mapper.ReplyMapper;
 import com.server.domain.reply.service.ReplyService;
 import com.server.global.argumentsresolver.LoginAccountIdResolver;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/replies")
+@Api(tags = {"4. 댓글 관리"}, description = "댓글 CRUD 관련 서비스")
 public class ReplyController {
 	private final ReplyService replyService;
 	private final ReplyMapper replyMapper;

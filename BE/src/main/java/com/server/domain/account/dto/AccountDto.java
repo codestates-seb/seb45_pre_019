@@ -2,6 +2,7 @@ package com.server.domain.account.dto;
 
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,13 @@ public class AccountDto {
 	@Setter
 	public static class SignUp {
 		@NotNull
+		@ApiModelProperty(value = "닉네임")
 		private String accountName;
 		@NotNull
+		@ApiModelProperty(value = "이메일")
 		private String accountEmail;
 		@NotNull
+		@ApiModelProperty(value = "패스워드")
 		private String accountPassword;
 	}
 
@@ -27,8 +31,10 @@ public class AccountDto {
 	@Setter
 	public static class Login {
 		@NotNull
+		@ApiModelProperty(value = "이메일")
 		private String accountEmail;
 		@NotNull
+		@ApiModelProperty(value = "패스워드")
 		private String accountPassword;
 	}
 }
