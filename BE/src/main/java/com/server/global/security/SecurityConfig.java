@@ -59,7 +59,11 @@ public class SecurityConfig {
 			.authorizeRequests()
 			// 로그인 회원가입은 풀고, 질문 추가/수정/삭제는 로그인한 사용자만 가능하게
 			.antMatchers("/account/signup", "/account/login").permitAll()
-			.antMatchers("/questions/post", "/questions/update/**", "/questions/delete/**", "/account/test").hasRole("USER")
+			.antMatchers(
+				"/questions/post", "/questions/update/**", "/questions/delete/**", "/account/test",
+				"/replies/post", "/replies/update/**", "/replies/delete/**",
+				"/questions/{question-id}/**"
+			).hasRole("USER")
 			.anyRequest().permitAll()
 			.and()
 			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
