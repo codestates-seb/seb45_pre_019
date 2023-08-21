@@ -87,10 +87,10 @@ const Container = styled.div`
   margin: 56px auto 0;
 
   &.full-container {
-    max-width: 100%;
+    /* max-width: 100%; */
     min-height: calc(100vh - 56px);
     align-items: center;
-    background-color: #f1f2f3;
+    /* background-color: #f1f2f3; */
   }
 `;
 

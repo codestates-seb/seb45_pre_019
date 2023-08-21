@@ -6,7 +6,7 @@ import { TokenExpirationChecker } from "./utils/TokenExpirationChecker";
 import RootLayout from "./pages/Root";
 import ErrorPage from "./pages/Error";
 import Home from "./pages/Home";
-import Questionlist from "./pages/Questionlist";
+import Questions from "./pages/Questions";
 import QuestionItemTest from "./pages/QuestionItemTest";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Questionlist />,
+            element: <Questions />,
           },
           {
             path: ":questionId",
