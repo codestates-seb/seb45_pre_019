@@ -1,60 +1,73 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { styled, css } from "styled-components";
 
-const PaginationWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-`;
-
-const PageButton = styled.button`
-  padding: 5px 10px;
-  margin: 0 5px;
-  border: none;
-  cursor: pointer;
-  background-color: ${(props) => (props.active ? "#007bff" : "white")};
-  color: ${(props) => (props.active ? "white" : "black")};
-  border: ${(props) => (props.active ? "1px solid #007bff" : "1px solid #aaa")};
-  border-radius: 3px;
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-`;
-
-const Pagination = ({ total, current, onPageChange }) => {
-  const totalPages = Math.ceil(total / 10);
+const Pagination = ({ totalQuestions, currentPage, onChangePage }) => {
+  const totalPage = Math.ceil(totalQuestions / 5);
+  currentPage = +currentPage; // currentPage 타입 변환
 
   const handlePageChange = (page) => {
-    onPageChange(page);
+    onChangePage(page);
   };
 
   return (
     <PaginationWrapper>
       <PageButton
-        disabled={current === 1}
-        onClick={() => handlePageChange(current - 1)}
+        disabled={currentPage === 1}
+        onClick={() => handlePageChange(currentPage - 1)}
       >
-        &lt; Prev
+        Prev
       </PageButton>
-      {[...Array(totalPages)].map((_, index) => (
+      {[...Array(totalPage)].map((_, index) => (
         <PageButton
           key={index}
-          active={index + 1 === current}
+          $active={index + 1 === currentPage}
           onClick={() => handlePageChange(index + 1)}
         >
           {index + 1}
         </PageButton>
       ))}
       <PageButton
-        disabled={current === totalPages}
-        onClick={() => handlePageChange(current + 1)}
+        disabled={currentPage === totalPage}
+        onClick={() => handlePageChange(currentPage + 1)}
       >
-        Next &gt;
+        Next
       </PageButton>
     </PaginationWrapper>
   );
 };
+
+const PaginationWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0 20px;
+`;
+
+const PageButton = styled.button`
+  padding: 4px 10px;
+  margin: 0 2px;
+  border-radius: 4px;
+
+  ${(props) =>
+    props.$active &&
+    css`
+      color: var(--color-white);
+      background-color: var(--color-main);
+      border: 1px solid var(--color-main);
+    `}
+
+  ${(props) =>
+    props.$active ||
+    css`
+      &:hover {
+        background-color: #d6d9dc;
+      }
+    `}
+
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+`;
 
 export default Pagination;
