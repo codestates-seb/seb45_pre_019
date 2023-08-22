@@ -149,6 +149,13 @@ function Header({ sidebarStatus, menuIconVisible, onToggle }) {
   const { token, onLogout } = useAuth();
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    onLogout();
+
+    window.alert("로그아웃 되었습니다.");
+    navigate("/questions");
+  };
+
   return (
     <HeaderContainer>
       <div className="header">
@@ -175,7 +182,7 @@ function Header({ sidebarStatus, menuIconVisible, onToggle }) {
               </SignupButton>
             </>
           )}
-          {token && <LogoutButton onClick={onLogout}>Logout</LogoutButton>}
+          {token && <LogoutButton onClick={handleLogout}>Logout</LogoutButton>}
         </AuthButtons>
       </div>
     </HeaderContainer>

@@ -100,7 +100,6 @@ const Signup = () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}:8080/account/signup`,
-        // "http://localhost:8080/signup",
         {
           method: "POST",
           headers: {
@@ -110,14 +109,11 @@ const Signup = () => {
             accountName: displayName,
             accountEmail: email,
             accountPassword: password,
-            // displayName,
-            // email,
-            // password,
           }),
         },
       );
 
-      console.log("response", response);
+      // console.log("SIGNUP RESPONSE", response);
 
       // Status CODE:: 404 (가입된 이메일이 이미 있는 경우)
       if (response.status === 404) {

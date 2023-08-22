@@ -9,7 +9,7 @@ const getTokenDuration = () => {
   const duration = expirationDate.getTime() - now.getTime();
   // 만료 시기가 남았다면 duration은 양수, 만료 시기가 지났다면 duration은 음수를 반환
 
-  console.log("토큰 만료시간: ", duration);
+  // console.log("토큰 만료시간: ", duration);
   return duration;
 };
 
