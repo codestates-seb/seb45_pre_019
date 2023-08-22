@@ -2,6 +2,7 @@ package com.server.domain.account.dto;
 
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ public class AccountDto {
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@Setter
+	@ApiModel(value = "회원가입 요청 형식")
 	public static class SignUp {
 		@NotNull
 		@ApiModelProperty(value = "닉네임")
@@ -29,6 +31,7 @@ public class AccountDto {
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@Setter
+	@ApiModel(value = "로그인 요청 형식")
 	public static class Login {
 		@NotNull
 		@ApiModelProperty(value = "이메일")

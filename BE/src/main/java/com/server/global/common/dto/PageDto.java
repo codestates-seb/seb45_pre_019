@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@ApiModel(value = "페이지네이션 결과 응답 형식")
 public class PageDto<T> {
 	@ApiModelProperty(value = "조회한 결과 데이터의 목록")
 	private List<T> content;
