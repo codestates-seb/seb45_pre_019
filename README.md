@@ -12,7 +12,7 @@
 - **`한줄 소개` :** Stackoverflow!  개발자간의 질의응답 커뮤니티 클론코딩 입니다.
 - **`팀원` :** 김병현(팀장), 백소원, 최수연, 김재희(부팀장), 함예준, 김건국
 - **`Wiki` :** <a href="https://github.com/codestates-seb/seb45_pre_019/wiki" target="_blank">🔖 Wiki</a>
-- **`배포 링크` :** <a href="http://stackoverflow-clone.s3-website.ap-northeast-2.amazonaws.com/" target="_blank">🌐 stackoverflow-clone</a>
+- **`배포 링크` :** <a href="http://stackoverflow-clone.s3-website.ap-northeast-2.amazonaws.com/questions" target="_blank">🌐 stackoverflow-clone</a>
 
 <br />
 
