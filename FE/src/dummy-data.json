@@ -1,0 +1,118 @@
+{
+  "content": [
+      {
+          "questionId": 1,
+          "questionTitle": "Why is processing a sorted array faster than processing an unsorted array?",
+          "questionProblem": "Why is processing a sorted array faster than processing an unsorted array? I tried switching around the order in which I ran my experiments, and used different seed for the random number generator, but the effect has been the same: searches in an unsorted array ran nearly twice as fast as the searches in the same array, but sorted! Does anyone have a good explanation of this strange effect? The source code of my tests follows; I am using .NET 4.0.",
+          "questionExpect": "예상결과1",
+          "views": 10,
+          "voteCount": 10,
+          "tags": [
+              "java",
+              "c++",
+              "performance",
+              "cpu-architecture"
+          ],
+          "account": {
+              "accountId": 1,
+              "accountEmail": "abc@gmail.com",
+              "accountName": "abcdefg"
+          }
+      },
+      {
+          "questionId": 2,
+          "questionTitle": "How do I delete a Git branch locally and remotely?",
+          "questionProblem": "How do I delete a Git branch locally and remotely? Failed Attempts to Delete a Remote Branch: How do I properly delete the remotes/origin/bugfix branch both locally and remotely?",
+          "questionExpect": "예상결과2",
+          "views": 0,
+          "voteCount": 0,
+          "tags": [
+              "git",
+              "git-branch"
+          ],
+          "account": {
+              "accountId": 2,
+              "accountEmail": "doby@doby.com",
+              "accountName": "doby"
+          }
+      },
+      {
+          "questionId": 3,
+          "questionTitle": "Rust owned type, copy traits and drop traits - relationship between them",
+          "questionProblem": "I have some questions regarding the relationship of drop/copy traits and ownership in Rust. The most important question: How do I know that a type is a type where the ownership rules apply? My best guess it is related to the lack of a copy trait. But I have never seen this stated explicity. Is this true? So my general question: If I have an assignment. One last note: The JoinHandle type lacks a drop trait - yet it is called an owned type. So I guess this points to the fact that a drop trait is not necessary for a type to be called an owned type. But is it sufficient? E.g. are all types with a drop trait owned types?",
+          "questionExpect": "예상결과3",
+          "views": 0,
+          "voteCount": 0,
+          "tags": [
+              "java",
+              "javascript"
+          ],
+          "account": {
+              "accountId": 3,
+              "accountEmail": "dadada@doby.com",
+              "accountName": "dadada"
+          }
+      },
+      {
+          "questionId": 4,
+          "questionTitle": "Dummy 질문4",
+          "questionProblem": "궁금한 내용4",
+          "questionExpect": "예상결과4",
+          "views": 0,
+          "voteCount": 0,
+          "tags": [
+              "java",
+              "c++"
+          ],
+          "account": {
+              "accountId": 4,
+              "accountEmail": "test@doby.com",
+              "accountName": "testID"
+          }
+      },
+      {
+        "questionId": 5,
+        "questionTitle": "Dummy 질문5",
+        "questionProblem": "궁금한 내용5",
+        "questionExpect": "예상결과5",
+        "views": 0,
+        "voteCount": 0,
+        "tags": [
+            "java",
+            "c++"
+        ],
+        "account": {
+            "accountId": 4,
+            "accountEmail": "test@doby.com",
+            "accountName": "testID"
+        }
+    },
+    {
+        "questionId": 6,
+        "questionTitle": "Dummy 질문6",
+        "questionProblem": "궁금한 내용6",
+        "questionExpect": "예상결과6",
+        "views": 0,
+        "voteCount": 0,
+        "tags": [
+            "java",
+            "c++"
+        ],
+        "account": {
+            "accountId": 4,
+            "accountEmail": "test@doby.com",
+            "accountName": "testID"
+        }
+    }
+  ],
+  "totalPages": 2,
+  "totalElements": 10,
+  "first": true,
+  "last": false,
+  "hasNext": true,
+  "hasPrevious": false,
+  "sorted": true,
+  "size": 5,
+  "pageNumber": 1,
+  "numberOfElements": 5
+}

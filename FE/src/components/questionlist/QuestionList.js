@@ -64,6 +64,10 @@ const ContentTitle = styled.h3`
 `;
 
 const ContentExcerpt = styled.p`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
   margin: 8px 0;
   font-size: 13px;
 `;
