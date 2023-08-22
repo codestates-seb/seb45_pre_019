@@ -7,6 +7,7 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,5 +66,13 @@ public class AnswerController {
 		List<Answer> answers = answerService.findAnswers(questionId);
 
 		return new ResponseEntity<>(mapper.answersToAnswerResponseDtos(answers), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{answer-id}")
+	public ResponseEntity deleteAnswer(@PathVariable("answer-id") Long answerId) {
+		Long loginAccountId = LoginAccountIdResolver.getAccountId();
+		answerService.deleteAnswer(answerId, loginAccountId);
+
+		return ResponseEntity.noContent().build();
 	}
 }

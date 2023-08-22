@@ -43,13 +43,31 @@ public class AnswerService {
 		return answerRepository.save(answer);
 	}
 
+	public void deleteAnswer(Long answerId, Long accountId) {
+		// 존재하는 답변인지 확인
+		Answer findAnswer = verifiedExistsAnswer(answerId);
+		Long authorId = findAnswer.getAccount().getAccountId();
+
+		// 로그인 한 회원이 작성자인지 확인
+		if(accountId == authorId) {
+			answerRepository.delete(findAnswer);
+		} else {
+			throw new BusinessLogicException(ExceptionCode.NON_ACCESS_DELETE);
+		}
+
+	}
+
+	public List<Answer> findAnswers(long questionId){
+		return answerRepository.findAll(questionId);
+	}
+
 	private void verifyAccess(Answer answer, Long accountId) { // 수정 권한 검증
 		if(!accountId.equals(answer.getAccount().getAccountId())) {
 			throw new BusinessLogicException(ExceptionCode.NON_ACCESS_MODIFY);
 		}
 	}
 
-	public List<Answer> findAnswers(long questionId){
-		return answerRepository.findAll(questionId);
+	private Answer verifiedExistsAnswer(Long answerId) {
+		return answerRepository.findById(answerId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ANSWER));
 	}
 }
