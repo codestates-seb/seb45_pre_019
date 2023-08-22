@@ -30,7 +30,7 @@ export const Answers = () => {
         Not the answer you&#39;re looking for? Browse other questions tagged{" "}
         <Tags>
           <li>python</li>
-          <li>ios</li>
+          <li>pandas</li>
         </Tags>
         or{" "}
         <a href="http://localhost:3000/questions/ask">ask your own question</a>.
