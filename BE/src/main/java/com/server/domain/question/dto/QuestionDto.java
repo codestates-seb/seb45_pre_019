@@ -2,6 +2,7 @@ package com.server.domain.question.dto;
 
 import java.util.List;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import com.server.domain.question.entity.Question;
 public class QuestionDto {
 
 	@Getter
+	@ApiModel(value = "질문 등록 형식")
 	public static class Post {
 		@NotBlank
 		@ApiModelProperty(value = "질문 타이틀")
@@ -43,6 +45,7 @@ public class QuestionDto {
 	}
 
 	@Getter
+	@ApiModel(value = "질문 수정 형식")
 	public static class Patch {
 		@ApiModelProperty(value = "수정할 질문 번호")
 		private long questionId;
@@ -77,6 +80,7 @@ public class QuestionDto {
 	@Getter
 	@AllArgsConstructor
 	@NoArgsConstructor
+	@ApiModel(value = "질문 응답 형식")
 	public static class Response {
 		@ApiModelProperty(value = "질문 번호")
 		private Long questionId;
