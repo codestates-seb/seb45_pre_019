@@ -37,6 +37,9 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "tags",
+      },
+      {
         path: "users",
         children: [
           {
@@ -48,6 +51,12 @@ const router = createBrowserRouter([
             element: <Signup />,
           },
         ],
+      },
+      {
+        path: "companies",
+      },
+      {
+        path: "collectives",
       },
     ],
   },
