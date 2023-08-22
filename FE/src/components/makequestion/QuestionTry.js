@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const TryContainer = styled.div`
@@ -6,20 +7,20 @@ const TryContainer = styled.div`
   padding: 20px;
   background-color: white;
   display: flex;
-  flex-direction: column; //문제해결을 위한 시도 컨테이너 박스
+  flex-direction: column;
 `;
 
 const TryText = styled.div`
   font-weight: bold;
-  margin-bottom: 10px; //문제 해결란 제목
+  margin-bottom: 10px;
 `;
 
 const TryDescription = styled.div`
   font-size: 14px;
-  margin-bottom: 10px; // 문제 해결란 부가설명
+  margin-bottom: 10px;
 `;
 
-const Input = styled.input`
+const Input = styled.textarea`
   background-color: white;
   border: 1px solid black;
   border-radius: 5px;
@@ -31,10 +32,19 @@ const Input = styled.input`
   &:focus {
     border-color: blue;
     box-shadow: 0 0 5px skyblue;
-  } //문제 해결을 위한 노력을 입력하는 창
+  }
 `;
 
-const QuestionTry = () => {
+const QuestionTry = ({ setTryDetails }) => {
+  const [localTryDetails, setLocalTryDetails] = useState("");
+
+  const handleChange = (e) => {
+    setLocalTryDetails(e.target.value);
+    if (setTryDetails) {
+      setTryDetails(e.target.value);
+    }
+  };
+
   return (
     <TryContainer>
       <TryText>What did you try and what were you expecting?</TryText>
@@ -42,7 +52,11 @@ const QuestionTry = () => {
         Describe what you tried, what you expected to happen, and what actually
         resulted. Minimum 20 characters.
       </TryDescription>
-      <Input type="text" placeholder="Enter your problem details..." />
+      <Input
+        value={localTryDetails}
+        onChange={handleChange}
+        placeholder="Enter your problem details..."
+      />
     </TryContainer>
   );
 };

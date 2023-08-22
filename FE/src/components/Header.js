@@ -97,7 +97,7 @@ const SearchContainer = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  border: 1px solid black; /* 테두리를 얇은 검정색으로 설정 */
+  border: 1px solid var(--color-line); /* 테두리를 얇은 검정색으로 설정 */
   border-radius: 5px; /* 모서리를 5px만큼 둥글게 설정 */
   padding: 5px;
   margin-left: auto;

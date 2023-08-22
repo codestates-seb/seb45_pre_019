@@ -6,7 +6,7 @@ import { TokenExpirationChecker } from "./utils/TokenExpirationChecker";
 import RootLayout from "./pages/Root";
 import ErrorPage from "./pages/Error";
 import Home from "./pages/Home";
-import QuestionsTest from "./pages/QuestionsTest";
+import Questions from "./pages/Questions";
 import QuestionItemTest from "./pages/QuestionItemTest";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <QuestionsTest />,
+            element: <Questions />,
           },
           {
             path: ":questionId",
@@ -35,6 +35,9 @@ const router = createBrowserRouter([
             element: <Question />,
           },
         ],
+      },
+      {
+        path: "tags",
       },
       {
         path: "users",
@@ -48,6 +51,12 @@ const router = createBrowserRouter([
             element: <Signup />,
           },
         ],
+      },
+      {
+        path: "companies",
+      },
+      {
+        path: "collectives",
       },
     ],
   },

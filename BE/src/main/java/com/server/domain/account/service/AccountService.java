@@ -63,7 +63,7 @@ public class AccountService {
 		Optional<Account> account = accountRepository.findByAccountEmail(accountEmail);
 
 		if(account.isPresent()) {
-			throw new BusinessLogicException(ExceptionCode.NOT_FOUND);
+			throw new BusinessLogicException(ExceptionCode.ACCOUNT_EXIST);
 		}
 	}
 }

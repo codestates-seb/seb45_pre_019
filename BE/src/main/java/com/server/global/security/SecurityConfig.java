@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -58,9 +59,9 @@ public class SecurityConfig {
 			.and()
 			.authorizeRequests()
 			// 로그인 회원가입은 풀고, 질문 추가/수정/삭제는 로그인한 사용자만 가능하게
-			.antMatchers("/account/signup", "/account/login").permitAll()
-			.antMatchers("/questions/post", "/questions/update/**", "/questions/delete/**", "/account/test").hasRole("USER")
-			.anyRequest().permitAll()
+			.antMatchers("/account/login", "/account/signup").permitAll()
+			.antMatchers(HttpMethod.GET).permitAll()
+			.anyRequest().hasRole("USER")
 			.and()
 			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling()

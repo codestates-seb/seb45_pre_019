@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Questiontitle from "../components/Questiontitle";
-import QuestionProblem from "../components/QuestionProblem";
-import QuestionTry from "../components/QuestionTry";
-import QuestionTags from "../components/QuestionTags";
+import Questiontitle from "../components/makequestion/Questiontitle";
+import QuestionProblem from "../components/makequestion/QuestionProblem";
+import QuestionTry from "../components/makequestion/QuestionTry";
+import QuestionTags from "../components/makequestion/QuestionTags";
 
 const PageContainer = styled.div`
   max-width: 1000px;
@@ -17,7 +18,8 @@ const NextButton = styled.button`
   border: none;
   border-radius: 5px;
   padding: 10px 15px;
-  cursor: pointer; //Next버튼, 누르면 다음 질문으로 넘어감
+  cursor: pointer;
+  margin-top: 10px;
 `;
 
 const SubmitButton = styled.button`
@@ -27,52 +29,75 @@ const SubmitButton = styled.button`
   border-radius: 5px;
   padding: 10px 15px;
   cursor: pointer;
-  margin-top: 10px; // Add margin to separate from the components
-`;
-
-const InactiveComponent = styled.div`
-  opacity: 0.3; //비활성화된 질문을 흐릿하게 만듬
+  margin-top: 10px;
 `;
 
 const QuestionPage = () => {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(1);
+  const [title, setTitle] = useState("");
+  const [problem, setProblem] = useState("");
+  const [tryDetails, setTryDetails] = useState("");
+  const [tags, setTags] = useState([]);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1); //처음에는 첫번째 질문만 활성화, 그리고 버튼을 누를때마다 그 다음 질문까지 활성화
+    setActiveStep(activeStep + 1);
   };
 
+  const handleSubmit = async () => {
+    const body = {
+      questionTitle: title,
+      questionProblem: problem,
+      questionExpect: tryDetails,
+      tags: tags,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/questions/question", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (response.status !== 200) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      console.log("Question submitted successfully:", await response.json());
+      navigate("/questionlist");
+    } catch (error) {
+      console.error("Error submitting question:", error);
+    }
+  };
   return (
     <PageContainer>
-      <Questiontitle />
-      {activeStep >= 2 ? (
-        <QuestionProblem />
-      ) : (
-        <InactiveComponent>
-          <QuestionProblem />
-        </InactiveComponent>
+      {activeStep === 1 && (
+        <>
+          <Questiontitle setTitle={setTitle} />
+          <NextButton onClick={handleNext}>Next</NextButton>
+        </>
       )}
-      {activeStep >= 3 ? (
-        <QuestionTry />
-      ) : (
-        <InactiveComponent>
-          <QuestionTry />
-        </InactiveComponent>
+      {activeStep === 2 && (
+        <>
+          <QuestionProblem setProblem={setProblem} />
+          <NextButton onClick={handleNext}>Next</NextButton>
+        </>
       )}
-      {activeStep >= 4 ? (
-        <QuestionTags />
-      ) : (
-        <InactiveComponent>
-          <QuestionTags />
-        </InactiveComponent>
+      {activeStep === 3 && (
+        <>
+          <QuestionTry setTryDetails={setTryDetails} />
+          <NextButton onClick={handleNext}>Next</NextButton>
+        </>
       )}
-
-      {activeStep === 4 ? (
-        <SubmitButton>Submit</SubmitButton>
-      ) : (
-        <NextButton onClick={handleNext}>Next</NextButton>
+      {activeStep === 4 && (
+        <>
+          <QuestionTags setTags={setTags} />
+          <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+        </>
       )}
-    </PageContainer> //제목, 문제점, 문제해결을 위한시도, 태그 네 개의 컴포넌트들을 Next버튼이 눌릴 때마다 하나씩 활성화 해서 입력창에 입력을 한다.
-    //모든 입력을 마친 후에는 Submit버튼을 눌러서 등록한다.
+    </PageContainer>
   );
 };
 

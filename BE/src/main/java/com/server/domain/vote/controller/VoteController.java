@@ -17,9 +17,14 @@ import com.server.domain.vote.mapper.VoteMapper;
 import com.server.domain.vote.service.VoteService;
 import com.server.global.argumentsresolver.LoginAccountIdResolver;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/questions")
+@Api(tags = {"5. 투표 관리"}, description = "투표 CRUD 관련 서비스")
 public class VoteController {
 
 	private final VoteService voteService;
@@ -31,6 +36,14 @@ public class VoteController {
 	}
 
 	@PostMapping("/{question-id}/votes")
+	@ApiOperation(value = "좋아요 투표", notes = "질문 혹은 답변의 투표 기능 관련 API")
+	@ApiResponses(
+		{
+			@ApiResponse(code = 400, message = "질문을 찾을 수 없습니다."),
+			@ApiResponse(code = 401, message = "인증되지 않은 사용자입니다."),
+			@ApiResponse(code = 200, message = "OK")
+		}
+	)
 	public ResponseEntity postVote(@Positive @PathVariable("question-id") Long questionId,
 									@RequestParam String status, @RequestBody VoteDto.Post postDto) {
 

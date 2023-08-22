@@ -2,33 +2,33 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const TagsContainer = styled.div`
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 20px; /* Padding inside the box */
-  background-color: white; /* White background */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: white;
   display: flex;
-  flex-direction: column; // 태그 컨테이너 박스
+  flex-direction: column;
 `;
 
 const TagsTitle = styled.div`
-  font-weight: bold; /* Bold font */
-  margin-bottom: 5px; //태그제목, Tags
+  font-weight: bold;
+  margin-bottom: 5px;
 `;
 
 const Subtitle = styled.div`
   font-size: 12px;
-  color: #666; /* Gray color */
-  margin-bottom: 10px; //태그 부연설명
+  color: #666;
+  margin-bottom: 10px;
 `;
 
 const Tag = styled.span`
-  background-color: #f2f2f2;
+  background-color: ${(props) => props.color};
   border-radius: 4px;
   padding: 4px 8px;
   margin-right: 5px;
   margin-bottom: 5px;
   display: flex;
-  align-items: center; //태그가 완료되면 생기는 태그
+  align-items: center;
 `;
 
 const TagText = styled.span`
@@ -48,7 +48,7 @@ const RemoveButton = styled.button`
 
   &:hover {
     background-color: #999;
-  } //태그 삭제버튼
+  }
 `;
 
 const Input = styled.input`
@@ -57,23 +57,32 @@ const Input = styled.input`
   border-radius: 5px;
   padding: 5px;
   outline: none;
-  cursor: text; //태그 입력창
+  cursor: text;
 `;
 
 const QuestionTags = () => {
   const [tags, setTags] = useState([]);
-  const [inputValue, setInputValue] = useState(""); //useState를 이용하여 태그의 상태를 변경함
+  const [inputValue, setInputValue] = useState("");
 
   const handleInputKeyDown = (event) => {
-    if (event.key === "Enter" && inputValue.trim() !== "") {
+    if (event.key === "Enter" && inputValue.trim() !== "" && tags.length < 5) {
       setTags([...tags, inputValue.trim()]);
-      setInputValue(""); //엔터키를 누를 시 태그가 생성됨
+      setInputValue("");
     }
   };
 
   const removeTag = (tagIndex) => {
     const newTags = tags.filter((_, index) => index !== tagIndex);
-    setTags(newTags); // 태그 삭제 버튼을 누를 시 태그가 삭제됨
+    setTags(newTags);
+  };
+
+  const getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   };
 
   return (
@@ -84,7 +93,7 @@ const QuestionTags = () => {
         to see suggestions.
       </Subtitle>
       {tags.map((tag, index) => (
-        <Tag key={index}>
+        <Tag key={index} color={getRandomColor()}>
           <TagText>{tag}</TagText>
           <RemoveButton onClick={() => removeTag(index)}>X</RemoveButton>
         </Tag>
