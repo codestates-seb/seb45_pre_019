@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { ReactComponent as StackoverflowLogo } from "../assets/icons/logo.svg";
-
-// import { ReactComponent as AlertIcon } from "../assets/icons/alertCircle.svg";
 import { useAuth } from "../context/auth-context";
 import OauthButtonArea from "../components/login,signup/OauthButtonArea";
 import BottomTextArea from "../components/login,signup/BottomTextArea";
@@ -77,7 +75,6 @@ const Login = () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}:8080/account/login`,
-        // "http://localhost:8080/login",
         {
           method: "POST",
           headers: {
@@ -86,13 +83,11 @@ const Login = () => {
           body: JSON.stringify({
             accountEmail: email,
             accountPassword: password,
-            // email,
-            // password,
           }),
         },
       );
 
-      console.log("LOGIN RESPONSE", response);
+      // console.log("LOGIN RESPONSE", response);
 
       // Status CODE:: 401 (비밀번호 또는 아이디가 틀렸을 경우)
       if (response.status === 401) {
@@ -121,8 +116,8 @@ const Login = () => {
         onLogin(token, expiration);
       }
 
-      // 로그인 완료시 메인 페이지로 이동
-      navigate("/");
+      // 로그인 완료시 questions 페이지로 이동
+      navigate("/questions");
     } catch (error) {
       console.warn("CATCH ERROR IS", error);
     }

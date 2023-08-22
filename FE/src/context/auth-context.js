@@ -17,10 +17,6 @@ export const AuthProvider = ({ children }) => {
     setToken("");
     localStorage.removeItem("ACCESS-TOKEN");
     localStorage.removeItem("tokenExpiration");
-
-    // 로그아웃 완료시 메인 페이지로 이동
-    window.alert("로그아웃 되었습니다.");
-    // navigate("/");
   };
 
   return (
