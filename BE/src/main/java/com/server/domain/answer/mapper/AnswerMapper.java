@@ -1,5 +1,6 @@
 package com.server.domain.answer.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,5 +23,20 @@ public interface AnswerMapper {
 
 	AnswerDto.Response answersToAnswerResponseDto(Answer answers);
 
-	List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers);
+	default List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers) {
+		List<AnswerDto.Response> responses = new ArrayList<>();
+
+		answers
+			.forEach(answer -> responses.add(
+				new AnswerDto.Response(
+					answer.getAnswerId(),
+					answer.getQuestion().getQuestionId(),
+					answer.getAccount().getAccountId(),
+					answer.getAnswerContent(),
+					answer.getReplies()
+				)
+			));
+
+		return responses;
+	}
 }
