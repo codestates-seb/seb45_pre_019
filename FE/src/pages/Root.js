@@ -63,7 +63,8 @@ const RootLayout = () => {
         />
         <Content
           className={
-            (currentPath === "/users/login" ||
+            (currentPath === "/" ||
+              currentPath === "/users/login" ||
               currentPath === "/users/signup") &&
             "full-content"
           }
