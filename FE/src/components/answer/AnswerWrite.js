@@ -39,7 +39,7 @@ export const AnswerWrite = () => {
       <h2>Your Answer</h2>
       <div>Post Editor</div>
       <PostAnswerButton>
-        <a href="/">Post Your Answer</a>
+        <a href="/questions/answer">Post Your Answer</a>
       </PostAnswerButton>
     </Block>
   );

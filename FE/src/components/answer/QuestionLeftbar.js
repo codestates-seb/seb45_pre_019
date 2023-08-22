@@ -17,6 +17,10 @@ const Block = styled.div`
     padding: 10px;
     border: 1px solid #dcdfe2;
     border-radius: 100%;
+
+    &:hover {
+      background-color: #fce3cf;
+    }
   }
   span {
     margin: 2px;
@@ -30,6 +34,9 @@ const Block = styled.div`
     padding: 10px;
     border: 1px solid #dcdfe2;
     border-radius: 100%;
+    &:hover {
+      background-color: #fce3cf;
+    }
   }
   button:nth-child(4) {
     padding: 4px 0;

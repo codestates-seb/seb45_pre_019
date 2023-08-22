@@ -97,16 +97,18 @@ const UserInfo = styled.div`
 
     ul {
       display: flex;
-      li:first-of-type {
+      flex-direction: row;
+
+      span:first-of-type {
         margin-left: 2px;
         font-weight: bold;
-        font-size: 12px;
+        font-size: 10px;
         color: #6a737c;
       }
-      li:not(:first-of-type) {
+      span:not(:first-of-type) {
         color: #a4afba;
         margin: 0px 3px 0px 2px;
-        font-size: 12px;
+        font-size: 10px;
       }
     }
   }
@@ -180,18 +182,18 @@ export const QuestionContent = (type) => {
                 <div>
                   <h6>질문자 이름</h6>
                   <ul>
-                    <li>3,667</li>
-                    <li title="requtation score">
+                    <span>7,030</span>
+                    <span title="requtation score">
                       <Badge color="#ffcc01" />1
-                    </li>
-                    <li>
+                    </span>
+                    <span>
                       <Badge color="#b4b8bc" />
                       35
-                    </li>
-                    <li>
+                    </span>
+                    <span>
                       <Badge color="#d1a684" />
                       52
-                    </li>
+                    </span>
                   </ul>
                 </div>
               </UserInfo>
@@ -209,18 +211,18 @@ export const QuestionContent = (type) => {
               <div>
                 <h6>답변자 이름</h6>
                 <ul>
-                  <li>4,004</li>
-                  <li title="requtation score">
+                  <span>4,030</span>
+                  <span title="requtation score">
                     <Badge color="#ffcc01" />2
-                  </li>
-                  <li>
+                  </span>
+                  <span>
                     <Badge color="#b4b8bc" />
                     29
-                  </li>
-                  <li>
+                  </span>
+                  <span>
                     <Badge color="#d1a684" />
                     49
-                  </li>
+                  </span>
                 </ul>
               </div>
             </UserInfo>

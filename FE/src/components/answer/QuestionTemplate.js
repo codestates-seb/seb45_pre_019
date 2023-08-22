@@ -18,7 +18,7 @@ const LiBlock = styled.li`
 
     &:active,
     &:hover {
-      color: #0adcff;
+      color: #2588d3;
     }
   }
 `;
