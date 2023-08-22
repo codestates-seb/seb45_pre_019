@@ -44,7 +44,7 @@ const Block = styled.div`
   }
 `;
 
-export const QuestionLeftBar = () => {
+export const QuestionLeftbar = () => {
   return (
     <Block>
       <button>
