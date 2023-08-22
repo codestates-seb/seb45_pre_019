@@ -13,29 +13,29 @@ import Signup from "./pages/Signup";
 import Question from "./pages/Question";
 
 const router = createBrowserRouter([
+  // questions 페이지를 먼저 노출시키기 위해 (Home page 작업 X) path 먼저 적용
+  {
+    path: "/questions",
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <Questions /> },
+      {
+        path: ":questionId",
+        element: <QuestionItemTest />,
+      },
+      {
+        path: "ask",
+        element: <Question />,
+      },
+    ],
+  },
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
-      {
-        path: "questions",
-        children: [
-          {
-            index: true,
-            element: <Questions />,
-          },
-          {
-            path: ":questionId",
-            element: <QuestionItemTest />,
-          },
-          {
-            path: "ask",
-            element: <Question />,
-          },
-        ],
-      },
       {
         path: "tags",
       },
