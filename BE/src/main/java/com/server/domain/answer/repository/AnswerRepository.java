@@ -11,6 +11,6 @@ import com.server.domain.answer.entity.Answer;
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
 	@Query(nativeQuery = true,
-		value = "SELECT * FROM ANSWER WHERE question_id = :questionId")
+		value = "SELECT * FROM answer WHERE question_id = :questionId")
 	List<Answer> findAll(@Param("questionId") long questionId);
 }
