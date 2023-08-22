@@ -23,6 +23,7 @@ export const Answers = () => {
       <AnswersHeader />
       <ul>
         <QuestionTemplate type="answer" />
+        <QuestionTemplate type="answer" />
       </ul>
       <AnswerWrite />
       <h2>
