@@ -7,7 +7,8 @@ import RootLayout from "./pages/Root";
 import ErrorPage from "./pages/Error";
 import Home from "./pages/Home";
 import Questions from "./pages/Questions";
-import QuestionItemTest from "./pages/QuestionItemTest";
+// import QuestionItemTest from "./pages/QuestionItemTest";
+import AnswerPage from "./pages/Answer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Question from "./pages/Question";
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
       { index: true, element: <Questions /> },
       {
         path: ":questionId",
-        element: <QuestionItemTest />,
+        element: <AnswerPage />,
       },
       {
         path: "ask",

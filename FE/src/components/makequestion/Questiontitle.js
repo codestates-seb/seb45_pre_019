@@ -45,7 +45,7 @@ const Questiontitle = ({ setTitle }) => {
   // 입력 값이 변경될 때마다 상태 업데이트
   const handleChange = (e) => {
     setLocalTitle(e.target.value);
-    
+
     // 부모 컴포넌트로 사용자의 입력을 전달 (옵셔널)
     if (setTitle) {
       setTitle(e.target.value);

@@ -4,7 +4,7 @@ import { styled, css } from "styled-components";
 const Pagination = ({ totalQuestions, currentPage, onChangePage }) => {
   // 전체 페이지 수를 계산합니다.
   const totalPage = Math.ceil(totalQuestions / 5);
-  
+
   currentPage = +currentPage; // currentPage를 숫자로 타입 변환
 
   // 페이지 변경 핸들러

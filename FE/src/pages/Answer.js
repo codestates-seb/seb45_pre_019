@@ -12,7 +12,7 @@ const Container = styled.div`
 
 const Content = styled.div``;
 
-export const AnswerPage = () => {
+const AnswerPage = () => {
   return (
     <Container>
       <QuestionHeader />
@@ -23,3 +23,5 @@ export const AnswerPage = () => {
     </Container>
   );
 };
+
+export default AnswerPage;
