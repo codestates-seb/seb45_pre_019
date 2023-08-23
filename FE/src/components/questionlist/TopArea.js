@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
+// TopArea 컴포넌트는 질문 리스트의 상단 영역을 표시합니다.
 const TopArea = ({ totalQuestions, currentSort, sortedBy }) => {
   const navigate = useNavigate();
 
+  // 버튼 클릭 시 해당 정렬 방식을 설정합니다.
   const handleButtonClick = (sort) => {
     sortedBy(sort);
   };
@@ -12,12 +14,15 @@ const TopArea = ({ totalQuestions, currentSort, sortedBy }) => {
     <TopAreaWrapper>
       <TitleAndButtonArea>
         <Title>All Questions</Title>
+        {/* "Ask Question" 버튼 클릭 시 "/questions/ask" 페이지로 이동합니다. */}
         <AskButton onClick={() => navigate("/questions/ask")}>
           Ask Question
         </AskButton>
       </TitleAndButtonArea>
       <FilterArea>
+        {/* 총 질문 개수를 표시합니다. */}
         <QuestionCount>{totalQuestions} questions</QuestionCount>
+        {/* 정렬 방식에 따라 버튼을 활성화하고, 해당 정렬 방식으로 데이터를 정렬합니다. */}
         <FilterButtonGroup>
           <FilterButton
             $active={currentSort === "new"}
@@ -42,6 +47,8 @@ const TopArea = ({ totalQuestions, currentSort, sortedBy }) => {
     </TopAreaWrapper>
   );
 };
+
+// 아래는 스타일 컴포넌트입니다. 각 컴포넌트의 스타일을 정의합니다.
 
 const TopAreaWrapper = styled.div`
   display: flex;

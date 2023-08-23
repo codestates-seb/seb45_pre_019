@@ -1,21 +1,27 @@
 import { styled, css } from "styled-components";
 
+// Pagination 컴포넌트는 전체 질문 수와 현재 페이지 번호를 기반으로 페이지네이션 버튼을 렌더링합니다.
 const Pagination = ({ totalQuestions, currentPage, onChangePage }) => {
+  // 전체 페이지 수를 계산합니다.
   const totalPage = Math.ceil(totalQuestions / 5);
-  currentPage = +currentPage; // currentPage 타입 변환
+  
+  currentPage = +currentPage; // currentPage를 숫자로 타입 변환
 
+  // 페이지 변경 핸들러
   const handlePageChange = (page) => {
     onChangePage(page);
   };
 
   return (
     <PaginationWrapper>
+      {/* 이전 페이지로 이동하는 버튼 */}
       <PageButton
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
         Prev
       </PageButton>
+      {/* 각 페이지 번호에 대한 버튼을 렌더링 */}
       {[...Array(totalPage)].map((_, index) => (
         <PageButton
           key={index}
@@ -25,6 +31,7 @@ const Pagination = ({ totalQuestions, currentPage, onChangePage }) => {
           {index + 1}
         </PageButton>
       ))}
+      {/* 다음 페이지로 이동하는 버튼 */}
       <PageButton
         disabled={currentPage === totalPage}
         onClick={() => handlePageChange(currentPage + 1)}
@@ -34,7 +41,6 @@ const Pagination = ({ totalQuestions, currentPage, onChangePage }) => {
     </PaginationWrapper>
   );
 };
-
 const PaginationWrapper = styled.div`
   display: flex;
   align-items: center;

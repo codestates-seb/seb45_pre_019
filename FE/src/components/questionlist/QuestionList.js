@@ -1,32 +1,42 @@
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
+// QuestionList 컴포넌트는 주어진 질문 항목을 표시합니다.
 const QuestionList = ({ item }) => {
+  // 질문의 고유 ID를 가져옵니다.
   const questionId = item.questionId;
 
   return (
     <QuestionListItem>
       <LeftColumn>
+        {/* 질문의 투표 수를 표시합니다. */}
         <span className="blackText">{item.voteCount} votes</span>
+        {/* 질문의 조회 수를 표시합니다. */}
         <span>{item.views} views</span>
       </LeftColumn>
       <RightColumn>
+        {/* 질문 제목을 클릭하면 해당 질문의 세부 페이지로 이동합니다. */}
         <ContentTitle>
           <Link to={`/questions/${questionId}`}>{item.questionTitle}</Link>
         </ContentTitle>
+        {/* 질문의 내용 일부를 표시합니다. */}
         <ContentExcerpt>{item.questionProblem}</ContentExcerpt>
         <ContentMeta>
+          {/* 질문에 연결된 태그를 표시합니다. */}
           <MetaTags>
             {item.tags.map((tag) => (
               <button key={tag}>{tag}</button>
             ))}
           </MetaTags>
+          {/* 질문 작성자의 이름을 표시합니다. */}
           <UserName>{item.account.accountName}</UserName>
         </ContentMeta>
       </RightColumn>
     </QuestionListItem>
   );
 };
+
+// 아래는 스타일 컴포넌트입니다. 각 컴포넌트의 스타일을 정의합니다.
 
 const QuestionListItem = styled.li`
   display: flex;

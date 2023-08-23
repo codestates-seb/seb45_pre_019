@@ -20,7 +20,7 @@
 
 | 김병현<br>(FE, 팀장) | 백소원<br>(FE) | 최수연<br>(FE) | 김재희<br>(BE, 부팀장) | 함예준<br>(BE) | 김건국<br>(BE) |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-|<p align="left">- 작성중</p>|<p align="left">- 레이아웃 구성 및<br/>라우팅 처리<br/> - Sidebar 컴포넌트<br/>작업<br/> - 로그인/회원가입<br/> 유효성 검사 및<br/> 기능 구현<br/> - 질문리스트 페이지<br/>- 배포환경 구축(S3)<br/></p>|<p align="left">- 작성중</p>|<p align="left">- 작성중</p>|<p align="left">- 로그인/회원가입 및<br/>스프링 시큐리티 설정<br/>- 댓글 CRUD 기능<br/>- API 문서화<br/>- 배포환경 구축<br/>(EC2/RDS)</p>|<p align="left">- 사용자 요구사항<br/>정의서 작성</p> |
+|<p align="left">- 질문하기 페이지<br/>질문 리스트 페이지<br/> header 컴포넌트 </p>|<p align="left">- 레이아웃 구성 및<br/>라우팅 처리<br/> - Sidebar 컴포넌트<br/>작업<br/> - 로그인/회원가입<br/> 유효성 검사 및<br/> 기능 구현<br/> - 질문리스트 페이지<br/>- 배포환경 구축(S3)<br/></p>|<p align="left">- 작성중</p>|<p align="left">- 작성중</p>|<p align="left">- 로그인/회원가입 및<br/>스프링 시큐리티 설정<br/>- 댓글 CRUD 기능<br/>- API 문서화<br/>- 배포환경 구축<br/>(EC2/RDS)</p>|<p align="left">- 사용자 요구사항<br/>정의서 작성</p> |
 
 <br />
 
