@@ -10,6 +10,7 @@ import loadingImg from "../assets/images/loading.gif";
 import dummyData from "../dummy-data.json";
 
 const Questions = () => {
+  // ... 상태 및 변수 선언
   const [questions, setQuestions] = useState([]);
   const [totalQuestions, setTotalQuestions] = useState(0);
 
@@ -21,11 +22,12 @@ const Questions = () => {
   const currentSort = query.get("sort") === null ? "new" : query.get("sort");
   const currentPage = query.get("page") === null ? 1 : query.get("page");
 
+  // 페이지나 정렬 방식이 변경될 때 질문 리스트를 가져오는 로직
   useEffect(() => {
     getQuestions();
   }, [currentSort, currentPage]);
 
-  // 질문 리스트 API 요청
+  // 서버에서 질문 목록을 가져오는 함수
   const getQuestions = async () => {
     setIsLoading(true);
     setError(null);
@@ -45,7 +47,7 @@ const Questions = () => {
       console.warn("Get Questions Error:", error);
       setError(error.message || "Something went wrong");
 
-      // 서버와 통신 안될 경우 dummy data
+      // API 통신 실패 시, 더미 데이터 사용
       const data = dummyData;
       const questionContent = data.content;
       const totalElements = data.totalElements;
@@ -56,13 +58,13 @@ const Questions = () => {
     setIsLoading(false);
   };
 
-  // 페이지 변경
+  // 페이지 번호가 변경될 때 URL의 쿼리 스트링을 업데이트
   const handleChangePage = (page) => {
     query.set("page", page);
     setQuery(query);
   };
 
-  // 정렬 변경
+  // 정렬 방식이 변경될 때 URL의 쿼리 스트링을 업데이트
   const handleSortedBy = (filter) => {
     query.set("sort", filter);
     setQuery(query);
@@ -103,11 +105,13 @@ const Questions = () => {
   );
 };
 
+// 로딩 중 화면에 보여지는 스타일
 const Loading = styled.div`
   width: 24px;
   margin: 50px auto;
 `;
 
+// 에러 메시지를 보여주는 스타일
 const Error = styled.div`
   margin: 50px auto;
   font-size: 14px;

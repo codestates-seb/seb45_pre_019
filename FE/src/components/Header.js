@@ -4,6 +4,7 @@ import { useAuth } from "../context/auth-context";
 import { ReactComponent as StackoverflowLogo } from "../assets/images/logo.svg";
 import search from "../assets/icons/search.png";
 
+// 헤더 전체를 감싸는 컨테이너 스타일
 const HeaderContainer = styled.header`
   z-index: 100;
   position: fixed;
@@ -27,6 +28,7 @@ const HeaderContainer = styled.header`
   }
 `;
 
+// 메뉴 아이콘 스타일
 const MenuIconContainer = styled.div`
   display: flex;
   align-items: center;
@@ -78,6 +80,7 @@ const MenuIconContainer = styled.div`
   }
 `;
 
+// 로고 링크 스타일
 const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
@@ -93,6 +96,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
+// 검색 창 스타일
 const SearchContainer = styled.div`
   flex: 1;
   display: flex;
@@ -113,12 +117,14 @@ const SearchText = styled.span`
   color: #888; /* 검색 텍스트*/
 `;
 
+// 로그인, 회원가입, 로그아웃 버튼들의 부모 컨테이너 스타일
 const AuthButtons = styled.div`
   display: flex;
   align-items: center;
   padding: 0 16px;
 `;
 
+// 로그인 버튼 스타일
 const LoginButton = styled.button`
   border: none;
   background-color: var(--color-sub-lightblue);
@@ -132,6 +138,7 @@ const LoginButton = styled.button`
   cursor: pointer;
 `;
 
+// 회원가입 버튼 스타일
 const SignupButton = styled.button`
   border: none;
   background-color: var(--color-sub-blue);
@@ -143,12 +150,15 @@ const SignupButton = styled.button`
   cursor: pointer; /* sign up 버튼 파란색 배경에 흰색 글씨 */
 `;
 
+// 로그아웃 버튼 스타일
 const LogoutButton = styled(LoginButton)``;
 
 function Header({ sidebarStatus, menuIconVisible, onToggle }) {
+  // 사용자 인증 상태 및 로그아웃 핸들러를 가져옴
   const { token, onLogout } = useAuth();
   const navigate = useNavigate();
 
+  // 로그아웃 핸들러
   const handleLogout = () => {
     onLogout();
 
@@ -159,18 +169,22 @@ function Header({ sidebarStatus, menuIconVisible, onToggle }) {
   return (
     <HeaderContainer>
       <div className="header">
+        {/* 메뉴 아이콘 렌더링 조건 */}
         {menuIconVisible && (
           <MenuIconContainer onClick={() => onToggle()}>
             <span className={sidebarStatus ? "menuIcon on" : "menuIcon"}></span>
           </MenuIconContainer>
         )}
+        {/* 로고 링크 */}
         <StyledLink to="/">
           <StackoverflowLogo />
         </StyledLink>
+        {/* 검색 창 */}
         <SearchContainer>
           <SearchIcon src={search} alt="search.png" />
           <SearchText>search...</SearchText>
         </SearchContainer>
+        {/* 로그인 상태에 따른 버튼 렌더링 조건 */}
         <AuthButtons>
           {!token && (
             <>
