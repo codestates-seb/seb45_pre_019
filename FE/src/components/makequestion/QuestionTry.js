@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+// 시도한 내용 컨테이너 스타일
 const TryContainer = styled.div`
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -10,16 +11,19 @@ const TryContainer = styled.div`
   flex-direction: column;
 `;
 
+// 시도한 내용의 제목 스타일
 const TryText = styled.div`
   font-weight: bold;
   margin-bottom: 10px;
 `;
 
+// 시도한 내용의 부제목 스타일
 const TryDescription = styled.div`
   font-size: 14px;
   margin-bottom: 10px;
 `;
 
+// 시도한 내용 입력 필드 스타일
 const Input = styled.textarea`
   background-color: white;
   border: 1px solid black;
@@ -36,10 +40,13 @@ const Input = styled.textarea`
 `;
 
 const QuestionTry = ({ setTryDetails }) => {
+  // 로컬 상태를 사용하여 사용자의 입력을 관리
   const [localTryDetails, setLocalTryDetails] = useState("");
 
+  // 입력 값이 변경될 때마다 상태 업데이트
   const handleChange = (e) => {
     setLocalTryDetails(e.target.value);
+    // 부모 컴포넌트로 사용자의 입력을 전달 (옵셔널)
     if (setTryDetails) {
       setTryDetails(e.target.value);
     }
