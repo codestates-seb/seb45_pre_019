@@ -37,7 +37,7 @@ public class AccountController {
 	@ApiOperation(value = "테스트", notes = "로그인 인증 테스트")
 	public String test() {
 		System.out.println(LoginAccountIdResolver.getAccountId());
-		return "Login Test!!";
+		return "Login Test!!!!!!";
 	}
 	@PostMapping("/signup")
 	@ApiOperation(value = "회원가입", notes = "새로운 회원 정보를 등록하는 API")
